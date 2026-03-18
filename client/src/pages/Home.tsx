@@ -348,7 +348,7 @@ export default function Home() {
       </section>
 
       {/* ─── ABOUT DR. IGOR TOTTI ─── */}
-      <section id="sobre" className="py-24 px-6" style={{ background: "var(--cream)" }}>
+      <section id="about-doctor" className="py-24 px-6" style={{ background: "var(--cream)" }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             {/* Photo */}
@@ -417,7 +417,7 @@ export default function Home() {
       </section>
 
       {/* ─── PROCEDURE SECTION ─── */}
-      <section id="procedimento" className="py-24 px-6" style={{ background: "white" }}>
+      <section id="procedures" className="py-24 px-6" style={{ background: "white" }}>
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="O Procedimento"
@@ -621,12 +621,12 @@ export default function Home() {
       </section>
 
       {/* ─── DIFFERENTIALS ─── */}
-      <section id="diferenciais" className="py-24 px-6" style={{ background: "white" }}>
+      <section id="about" className="py-24 px-6" style={{ background: "white" }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <p className="font-body text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "var(--gold)" }}>
-                ✦ Por Que Nos Escolher
+                ✨ Nosso Espaço
               </p>
               <h2 className="font-heading text-4xl md:text-5xl font-light mb-6" style={{ color: "var(--charcoal)" }}>
                 O Que Nos Torna{" "}
@@ -696,7 +696,7 @@ export default function Home() {
       </section>
 
       {/* ─── LEAD CAPTURE FORM ─── */}
-      <section id="agendar" className="py-24 px-6" style={{ background: "var(--cream)" }}>
+      <section id="contact" className="py-24 px-6" style={{ background: "var(--cream)" }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             {/* Left: copy */}
@@ -741,7 +741,7 @@ export default function Home() {
       </section>
 
       {/* ─── FINAL CTA ─── */}
-      <section className="py-24 px-6 relative overflow-hidden" style={{ background: "var(--charcoal)" }}>
+      <section id="location" className="py-24 px-6 relative overflow-hidden" style={{ background: "var(--charcoal)" }}>
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 left-0 w-96 h-96 rounded-full" style={{ background: "var(--gold)", filter: "blur(80px)", transform: "translate(-30%, -30%)" }} />
