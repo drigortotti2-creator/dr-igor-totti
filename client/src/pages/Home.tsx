@@ -264,12 +264,6 @@ export default function Home() {
           </div>
           {/* Right Section */}
           <div className="flex items-center gap-5 flex-shrink-0">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-yellow-400" style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-yellow-400" style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m5.521 17.674c-1.431 2.582-4.169 4.326-7.521 4.326-4.687 0-8.5-3.813-8.5-8.5s3.813-8.5 8.5-8.5c3.352 0 6.09 1.744 7.521 4.326.788-1.973 1.25-4.14 1.25-6.326 0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12c2.186 0 4.353-.462 6.326-1.25z"/></svg>
-            </a>
             <button onClick={scrollToForm} className="btn-gold text-xs px-5 py-2.5 flex-shrink-0">
               Agendar Consulta
             </button>
