@@ -90,3 +90,17 @@ export async function getUserByOpenId(openId: string) {
 }
 
 // TODO: add feature queries here as your schema grows.
+
+export async function insertLead(lead: { fullName: string; whatsapp: string; city: string; interest?: string }) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+  const { leads } = await import("../drizzle/schema");
+  await db.insert(leads).values({
+    fullName: lead.fullName,
+    whatsapp: lead.whatsapp,
+    city: lead.city,
+    interest: lead.interest ?? null,
+  });
+}
