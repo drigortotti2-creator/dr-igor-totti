@@ -40,3 +40,15 @@
 - [x] Verificar TypeScript sem erros (pnpm check)
 - [x] Verificar submissão do formulário e redirecionamento WhatsApp
 - [x] Verificar notificação ao proprietário
+
+
+## Painel Administrativo de Leads
+- [x] Criar queries de leads no server/db.ts (listar, filtrar, buscar)
+- [x] Criar procedures tRPC protegidas para admin (leads.list, leads.search, leads.export)
+- [x] Criar página /admin/leads com tabela responsiva
+- [x] Implementar filtros por data, cidade, interesse
+- [x] Implementar busca por nome/WhatsApp
+- [x] Implementar paginação
+- [x] Implementar exportação CSV/JSON
+- [x] Criar testes para procedures de admin (17 testes passando)
+- [x] Verificar proteção de rota (apenas admin)

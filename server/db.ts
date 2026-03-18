@@ -104,3 +104,100 @@ export async function insertLead(lead: { fullName: string; whatsapp: string; cit
     interest: lead.interest ?? null,
   });
 }
+
+export async function getAllLeads(limit = 100, offset = 0) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+  const { leads } = await import("../drizzle/schema");
+  const { desc } = await import("drizzle-orm");
+
+  const result = await db
+    .select()
+    .from(leads)
+    .orderBy(desc(leads.createdAt))
+    .limit(limit)
+    .offset(offset);
+
+  return result;
+}
+
+export async function getLeadsCount() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+  const { leads } = await import("../drizzle/schema");
+  const { count } = await import("drizzle-orm");
+
+  const result = await db
+    .select({ value: count() })
+    .from(leads);
+
+  return result[0]?.value ?? 0;
+}
+
+export async function searchLeads(query: string, limit = 100, offset = 0) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+  const { leads } = await import("../drizzle/schema");
+  const { desc, or, like } = await import("drizzle-orm");
+
+  const result = await db
+    .select()
+    .from(leads)
+    .where(
+      or(
+        like(leads.fullName, `%${query}%`),
+        like(leads.whatsapp, `%${query}%`),
+        like(leads.city, `%${query}%`)
+      )
+    )
+    .orderBy(desc(leads.createdAt))
+    .limit(limit)
+    .offset(offset);
+
+  return result;
+}
+
+export async function getLeadsByFilters(filters: {
+  city?: string;
+  interest?: string;
+  startDate?: Date;
+  endDate?: Date;
+}, limit = 100, offset = 0) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+  const { leads } = await import("../drizzle/schema");
+  const { desc, and, eq, gte, lte } = await import("drizzle-orm");
+
+  const conditions: any[] = [];
+
+  if (filters.city) {
+    conditions.push(eq(leads.city, filters.city));
+  }
+  if (filters.interest) {
+    conditions.push(eq(leads.interest, filters.interest));
+  }
+  if (filters.startDate) {
+    conditions.push(gte(leads.createdAt, filters.startDate));
+  }
+  if (filters.endDate) {
+    conditions.push(lte(leads.createdAt, filters.endDate));
+  }
+
+  const result = await db
+    .select()
+    .from(leads)
+    .where(conditions.length > 0 ? and(...conditions) : undefined)
+    .orderBy(desc(leads.createdAt))
+    .limit(limit)
+    .offset(offset);
+
+  return result;
+}
