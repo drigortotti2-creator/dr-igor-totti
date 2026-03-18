@@ -248,20 +248,26 @@ export default function Home() {
       </a>
 
       {/* ─── NAVBAR ─── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 py-4 px-6" style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid oklch(0.93 0.005 85)" }}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, oklch(0.62 0.09 75), oklch(0.72 0.12 75))" }}>
+      <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: "linear-gradient(90deg, #2a2a2a 0%, #1a3a3a 100%)", height: "64px", display: "flex", alignItems: "center" }}>
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between px-6" style={{ gap: "2rem" }}>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, oklch(0.62 0.09 75), oklch(0.72 0.12 75))" }}>
               <span className="font-heading text-white font-600 text-sm">IT</span>
             </div>
-            <div>
-              <p className="font-heading font-600 text-sm leading-tight" style={{ color: "var(--charcoal)" }}>Dr. Igor Totti</p>
-              <p className="font-body text-xs leading-tight" style={{ color: "var(--gold)" }}>Odontologia Estética</p>
-            </div>
           </div>
-          <button onClick={scrollToForm} className="btn-gold hidden sm:flex text-xs px-5 py-2.5">
-            Agendar Consulta
-          </button>
+          <div className="flex items-center gap-8 flex-1 justify-center">
+            {[{ label: "Nosso espaço", href: "#about" }, { label: "Tratamentos", href: "#procedures" }, { label: "Sobre", href: "#about-doctor" }, { label: "Resultados", href: "#results" }, { label: "Diferenciais", href: "#differentials" }, { label: "Contato", href: "#contact" }, { label: "Localização", href: "#location" }].map((item) => (
+              <a key={item.label} href={item.href} className="font-body text-sm font-500 transition-colors" style={{ color: "rgba(255, 255, 255, 0.85)" }}>{item.label}</a>
+            ))}
+          </div>
+          <div className="flex items-center gap-4 flex-shrink-0">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255, 255, 255, 0.7)" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255, 255, 255, 0.7)" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m5.521 17.674c-1.431 2.582-4.169 4.326-7.521 4.326-4.687 0-8.5-3.813-8.5-8.5s3.813-8.5 8.5-8.5c3.352 0 6.09 1.744 7.521 4.326.788-1.973 1.25-4.14 1.25-6.326 0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12c2.186 0 4.353-.462 6.326-1.25z"/></svg>
+            </a>
+          </div>
         </div>
       </nav>
 
