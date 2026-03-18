@@ -129,11 +129,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Lato', 'Inter', sans-serif;
+    font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-family: 'Instrument Sans', 'Helvetica', sans-serif;
     letter-spacing: -0.02em;
   }
   button:not(:disabled),
@@ -151,10 +151,10 @@
 
 @layer utilities {
   .font-heading {
-    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-family: 'Instrument Sans', 'Helvetica', sans-serif;
   }
   .font-body {
-    font-family: 'Lato', 'Inter', sans-serif;
+    font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
   }
   .text-gold {
     color: var(--gold);
