@@ -1,20 +1,46 @@
-# Dr. Igor Totti - Landing Page
+# Dr. Igor Totti - Landing Page TODO
 
-## Landing Page Premium (Fase 1)
-- [x] Seção Hero com imagem de sorriso perfeito
-- [x] Headline emocional e subheadline
-- [x] Botão CTA primário para WhatsApp
-- [x] Seção Sobre Dr. Igor Totti
-- [x] Seção explicativa sobre Facetas de Resina Composta
-- [x] Galeria Antes & Depois
-- [x] Seção de Depoimentos
-- [x] Seção de Diferenciais
-- [x] Seção CTA Final
-- [x] Formulário de captação de leads
-- [x] Integração com banco de dados
-- [x] Notificação ao proprietário
-- [x] Redirecionamento WhatsApp automático
-- [x] Botão flutuante WhatsApp
+## Banco de Dados
+- [x] Criar tabela `leads` no schema Drizzle
+- [x] Gerar e aplicar migration SQL
+- [x] Criar helper de query em server/db.ts
+
+## Backend (tRPC)
+- [x] Criar procedure `leads.submit` para salvar lead no banco
+- [x] Integrar notificação ao proprietário via notifyOwner
+- [x] Retornar URL do WhatsApp pré-preenchida após submissão
+
+## Design System
+- [x] Definir paleta de cores (branco, preto, dourado/champagne)
+- [x] Configurar tipografia premium (Cormorant Garamond + Lato via Google Fonts)
+- [x] Atualizar index.css com tokens de design e utilitários customizados
+- [x] Atualizar index.html com fontes e meta tags
+
+## Seções da Landing Page
+- [x] Hero Section (imagem, headline emocional, subheadline, CTAs WhatsApp)
+- [x] Seção Sobre Dr. Igor Totti (foto, texto humanizado, credenciais, autoridade)
+- [x] Seção Facetas de Resina Composta (6 benefícios em cards premium)
+- [x] Galeria Antes e Depois (5 imagens em grid com overlay)
+- [x] Seção Depoimentos (6 testemunhos com nomes e estrelas)
+- [x] Seção Diferenciais (4 diferenciais com ícones + imagem do consultório)
+- [x] Seção CTA Final (reforço emocional + botões de agendamento)
+- [x] Formulário de captação de leads (Nome, WhatsApp, Cidade, Interesse)
+- [x] Botão flutuante de WhatsApp em toda a página (com animação pulse)
+- [x] Navbar fixa com logo e CTA
+
+## UX/UI
+- [x] Smooth scrolling
+- [x] Design responsivo (mobile-first)
+- [x] Múltiplos CTAs ao longo da página
+- [x] Navegação simples sem menus complexos
+- [x] Animações e hover effects premium
+
+## Testes
+- [x] Vitest para procedure de leads (6 testes passando)
+- [x] Verificar TypeScript sem erros (pnpm check)
+- [x] Verificar submissão do formulário e redirecionamento WhatsApp
+- [x] Verificar notificação ao proprietário
+
 
 ## Painel Administrativo de Leads
 - [x] Criar queries de leads no server/db.ts (listar, filtrar, buscar)
@@ -26,27 +52,3 @@
 - [x] Implementar exportação CSV/JSON
 - [x] Criar testes para procedures de admin (17 testes passando)
 - [x] Verificar proteção de rota (apenas admin)
-
-## Redesign Visual (Estilo Dra. Aline Ribeiro - v1)
-- [x] Atualizar paleta de cores: fundo escuro (charcoal) + dourado/champagne
-- [x] Redesenhar Hero Section com fundo escuro e layout moderno
-- [x] Atualizar cards de Procedimentos com novo estilo
-- [x] Redesenhar Galeria Antes/Depois
-- [x] Atualizar Depoimentos com novo layout
-- [x] Adicionar elementos geométricos (triângulos, círculos)
-- [x] Adicionar animações e efeitos hover
-- [x] Testar responsividade do novo design
-
-## Redesign Visual v2 (Paleta Específica Dr. Igor)
-- [x] Atualizar design system com paleta: #f5f5dc, #d6bca6, #3b2f2f, #013220
-- [x] Implementar fontes: Instrument Serif Family + Helvetica Font Family
-- [x] Redesenhar Hero Section com layout de autoridade (foto grande + texto)
-- [x] Implementar seção Testemunhas com cards de autoridade
-- [x] Implementar seção Consulta Particular com layout especial
-- [x] Implementar seção Estatísticas (+4, +1mil, +3mil)
-- [x] Implementar seção de Diferenciais com ícones
-- [x] Implementar Galeria de Casos com grid responsivo
-- [x] Implementar seção FAQ com accordion
-- [x] Implementar CTA Final com imagem de fundo
-- [x] Testes visuais e responsividade (17 testes passando)
-- [x] Checkpoint final
