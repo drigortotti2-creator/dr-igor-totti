@@ -291,7 +291,7 @@ export default function Home() {
             </p>
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-light text-white leading-tight mb-6">
               Transforme Seu Sorriso e{" "}
-              <em className="not-italic" style={{ color: "var(--gold)" }}>Reconquiste</em>{" "}
+              <em className="not-italic" style={{ color: "var(--gold)", fontFamily: "'Instrument Sans', sans-serif", fontWeight: "700", fontStyle: "italic" }}>Reconquiste</em>{" "}
               Sua Confiança
             </h1>
             <p className="font-body text-lg md:text-xl text-white/85 mb-10 leading-relaxed">
@@ -630,7 +630,7 @@ export default function Home() {
               </p>
               <h2 className="font-heading text-4xl md:text-5xl font-light mb-6" style={{ color: "var(--charcoal)" }}>
                 O Que Nos Torna{" "}
-                <em className="not-italic" style={{ color: "var(--gold)" }}>Diferentes</em>
+                <em className="not-italic" style={{ color: "var(--gold)", fontFamily: "'Instrument Sans', sans-serif", fontWeight: "700", fontStyle: "italic" }}>Diferentes</em>
               </h2>
               <div className="mb-8" style={{ width: "60px", height: "2px", background: "linear-gradient(to right, var(--gold), transparent)" }} />
               <p className="font-body text-base leading-relaxed mb-10" style={{ color: "oklch(0.4 0.01 30)" }}>
@@ -706,7 +706,7 @@ export default function Home() {
               </p>
               <h2 className="font-heading text-4xl md:text-5xl font-light mb-6" style={{ color: "var(--charcoal)" }}>
                 Seu Novo Sorriso{" "}
-                <em className="not-italic" style={{ color: "var(--gold)" }}>Começa Aqui</em>
+                <em className="not-italic" style={{ color: "var(--gold)", fontFamily: "'Instrument Sans', sans-serif", fontWeight: "700", fontStyle: "italic" }}>Começa Aqui</em>
               </h2>
               <div className="mb-8" style={{ width: "60px", height: "2px", background: "linear-gradient(to right, var(--gold), transparent)" }} />
               <p className="font-body text-base leading-relaxed mb-8" style={{ color: "oklch(0.4 0.01 30)" }}>
@@ -754,7 +754,7 @@ export default function Home() {
           </p>
           <h2 className="font-heading text-5xl md:text-6xl font-light text-white mb-6 leading-tight">
             Seu Sorriso Dos Sonhos{" "}
-            <em className="not-italic" style={{ color: "var(--gold)" }}>Te Espera</em>
+            <em className="not-italic" style={{ color: "var(--gold)", fontFamily: "'Instrument Sans', sans-serif", fontWeight: "700", fontStyle: "italic" }}>Te Espera</em>
           </h2>
           <p className="font-body text-lg text-white/80 mb-10 leading-relaxed">
             Cada dia que passa é um dia a menos sorrindo com confiança. Dê o primeiro passo agora — a transformação que você sempre quis está a uma mensagem de distância.
