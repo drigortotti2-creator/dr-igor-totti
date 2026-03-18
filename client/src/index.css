@@ -133,7 +133,8 @@
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Instrument Sans', 'Helvetica', sans-serif;
+    font-family: 'Instrument Serif', 'Helvetica', serif;
+    font-style: italic;
     letter-spacing: -0.02em;
   }
   button:not(:disabled),
@@ -151,7 +152,8 @@
 
 @layer utilities {
   .font-heading {
-    font-family: 'Instrument Sans', 'Helvetica', sans-serif;
+    font-family: 'Instrument Serif', 'Helvetica', serif;
+    font-style: italic;
   }
   .font-body {
     font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
