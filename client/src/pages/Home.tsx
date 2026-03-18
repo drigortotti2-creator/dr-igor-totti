@@ -258,7 +258,7 @@ export default function Home() {
           </div>
           {/* Menu Items */}
           <div className="flex items-center gap-8 flex-1 justify-center">
-            {[{ label: "Nosso espaço", href: "#about" }, { label: "Tratamentos", href: "#procedures" }, { label: "Sobre", href: "#about-doctor" }, { label: "Resultados", href: "#results" }, { label: "Diferenciais", href: "#differentials" }, { label: "Contato", href: "#contact" }, { label: "Localização", href: "#location" }].map((item) => (
+            {[{ label: "Nosso espaço", href: "#about" }, { label: "Tratamentos", href: "#procedures" }, { label: "Sobre", href: "#about-doctor" }, { label: "Resultados", href: "#resultados" }, { label: "Depoimentos", href: "#depoimentos" }, { label: "Contato", href: "#contact" }, { label: "Localização", href: "#location" }].map((item) => (
               <a key={item.label} href={item.href} onClick={(e) => { e.preventDefault(); const el = document.querySelector(item.href); if (el) el.scrollIntoView({ behavior: "smooth" }); }} className="font-body text-sm font-500 transition-colors hover:text-yellow-400" style={{ color: "rgba(255, 255, 255, 0.85)" }}>{item.label}</a>
             ))}
           </div>
@@ -778,6 +778,79 @@ export default function Home() {
             >
               Preencher Formulário
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── LOCATION SECTION ─── */}
+      <section id="location" className="py-24 px-6" style={{ background: "white" }}>
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            eyebrow="Nos Visite"
+            title="OdontoNew Guarapuava"
+            subtitle="Venha conhecer nosso espaço acolhedor e moderno. Estamos localizados em Guarapuava, pronto para transformar seu sorriso."
+          />
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Map */}
+            <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: "4/3" }}>
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3633.4567890123456!2d-51.4534!3d-25.3957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94f5c8b7c8b7c8b7%3A0x1234567890abcdef!2sOdontoNew%20Guarapuava!5e0!3m2!1spt-BR!2sbr!4v1234567890123"
+              />
+            </div>
+
+            {/* Info */}
+            <div>
+              <p className="font-body text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "var(--gold)" }}>
+                ✨ Informações de Contato
+              </p>
+              <h3 className="font-heading text-3xl md:text-4xl font-light mb-6" style={{ color: "var(--charcoal)" }}>
+                Visite Nossa Clínica
+              </h3>
+              <div className="mb-8" style={{ width: "60px", height: "2px", background: "linear-gradient(to right, var(--gold), transparent)" }} />
+
+              <div className="space-y-6">
+                <div>
+                  <p className="font-body text-sm font-700 mb-2" style={{ color: "var(--charcoal)" }}>Endereço</p>
+                  <p className="font-body text-base leading-relaxed" style={{ color: "oklch(0.4 0.01 30)" }}>
+                    Rua Exemplo, 123<br />
+                    Guarapuava, PR 85010-000
+                  </p>
+                </div>
+                <div>
+                  <p className="font-body text-sm font-700 mb-2" style={{ color: "var(--charcoal)" }}>Horário de Atendimento</p>
+                  <p className="font-body text-base leading-relaxed" style={{ color: "oklch(0.4 0.01 30)" }}>
+                    Segunda a Sexta: 8h às 18h<br />
+                    Sábado: 8h às 12h<br />
+                    Domingo: Fechado
+                  </p>
+                </div>
+                <div>
+                  <p className="font-body text-sm font-700 mb-2" style={{ color: "var(--charcoal)" }}>Contato</p>
+                  <p className="font-body text-base leading-relaxed" style={{ color: "oklch(0.4 0.01 30)" }}>
+                    <a href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="font-700" style={{ color: "#25D366" }}>
+                      WhatsApp: (42) 99999-9999
+                    </a><br />
+                    Email: contato@odontonew.com.br
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={buildWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-whatsapp mt-8"
+              >
+                <WhatsAppIcon size={20} />
+                Agendar Consulta
+              </a>
+            </div>
           </div>
         </div>
       </section>
