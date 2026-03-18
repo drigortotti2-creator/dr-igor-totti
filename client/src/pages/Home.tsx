@@ -5,7 +5,7 @@ import { toast } from "sonner";
 // CDN image URLs
 const IMAGES = {
   heroSmile: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/hero-smile_99ee2167.jpg",
-  dentistPortrait: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/dr-igor-totti-processed-3Nest3wbPJ4eWxk9k7pegC.webp",
+  dentistPortrait: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/dentist-portrait_a9f61fcd.jpg",
   smileCloseup: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/smile-closeup_7cdf2293.jpg",
   smileWoman: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/smile-woman_0bdde4ab.jpg",
   beforeAfter1: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/before-after-1_74c23aa4.png",
