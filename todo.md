@@ -52,3 +52,14 @@
 - [x] Implementar exportação CSV/JSON
 - [x] Criar testes para procedures de admin (17 testes passando)
 - [x] Verificar proteção de rota (apenas admin)
+
+
+## Redesign Visual (Estilo Dra. Aline Ribeiro)
+- [x] Atualizar paleta de cores: fundo escuro (charcoal) + dourado/champagne
+- [x] Redesenhar Hero Section com fundo escuro e layout moderno
+- [x] Atualizar cards de Procedimentos com novo estilo
+- [x] Redesenhar Galeria Antes/Depois
+- [x] Atualizar Depoimentos com novo layout
+- [x] Adicionar elementos geométricos (triângulos, círculos)
+- [x] Adicionar animações e efeitos hover
+- [x] Testar responsividade do novo design
