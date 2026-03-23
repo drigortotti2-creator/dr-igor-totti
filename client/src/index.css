@@ -1,3 +1,4 @@
+@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -42,86 +43,81 @@
 }
 
 :root {
-  /* Dr. Igor Totti Brand Palette - RGB Exact */
-  --cream: #f5f5dc;
-  --taupe: #d6bca6;
-  --charcoal: #3b2f2f;
-  --forest: #013220;
-
-  --primary: #d6bca6;
-  --primary-foreground: #ffffff;
-  --sidebar-primary: #d6bca6;
-  --sidebar-primary-foreground: #ffffff;
-  --chart-1: #d6bca6;
-  --chart-2: #f5f5dc;
-  --chart-3: #3b2f2f;
-  --chart-4: #013220;
-  --chart-5: #8b7355;
+  /* Gold/Champagne premium palette for Dr. Igor Totti */
+  --primary: oklch(0.62 0.09 75);
+  --primary-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.62 0.09 75);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --chart-1: oklch(0.72 0.12 75);
+  --chart-2: oklch(0.62 0.09 75);
+  --chart-3: oklch(0.52 0.1 65);
+  --chart-4: oklch(0.42 0.08 55);
+  --chart-5: oklch(0.32 0.06 45);
   --radius: 0.65rem;
-  --background: #f5f5dc;
-  --foreground: #3b2f2f;
-  --card: #ffffff;
-  --card-foreground: #3b2f2f;
-  --popover: #ffffff;
-  --popover-foreground: #3b2f2f;
-  --secondary: #f5f5dc;
-  --secondary-foreground: #3b2f2f;
-  --muted: #e8e0d0;
-  --muted-foreground: #6b5d55;
-  --accent: #d6bca6;
-  --accent-foreground: #ffffff;
-  --destructive: #c41e3a;
-  --destructive-foreground: #ffffff;
-  --border: #d6bca6;
-  --input: #f5f5dc;
-  --ring: #d6bca6;
-  --sidebar: #f5f5dc;
-  --sidebar-foreground: #3b2f2f;
-  --sidebar-accent: #d6bca6;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #d6bca6;
-  --sidebar-ring: #d6bca6;
+  --background: oklch(0.99 0.003 90);
+  --foreground: oklch(0.14 0.01 30);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.14 0.01 30);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.14 0.01 30);
+  --secondary: oklch(0.97 0.005 85);
+  --secondary-foreground: oklch(0.2 0.01 30);
+  --muted: oklch(0.96 0.005 85);
+  --muted-foreground: oklch(0.5 0.01 30);
+  --accent: oklch(0.62 0.09 75);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.91 0.006 85);
+  --input: oklch(0.91 0.006 85);
+  --ring: oklch(0.62 0.09 75);
+  --sidebar: oklch(0.99 0.003 90);
+  --sidebar-foreground: oklch(0.14 0.01 30);
+  --sidebar-accent: oklch(0.97 0.005 85);
+  --sidebar-accent-foreground: oklch(0.14 0.01 30);
+  --sidebar-border: oklch(0.91 0.006 85);
+  --sidebar-ring: oklch(0.62 0.09 75);
   /* Custom brand tokens */
-  --gold: #d6bca6;
-  --gold-light: #e8dcc8;
-  --gold-dark: #c9a876;
-  --charcoal: #3b2f2f;
-  --cream: #f5f5dc;
+  --gold: oklch(0.72 0.12 75);
+  --gold-light: oklch(0.88 0.06 80);
+  --gold-dark: oklch(0.52 0.1 65);
+  --charcoal: oklch(0.14 0.01 30);
+  --cream: oklch(0.98 0.01 90);
 }
 
 .dark {
-  --primary: #d6bca6;
-  --primary-foreground: #ffffff;
-  --sidebar-primary: #d6bca6;
-  --sidebar-primary-foreground: #ffffff;
-  --background: #3b2f2f;
-  --foreground: #f5f5dc;
-  --card: #2a2220;
-  --card-foreground: #f5f5dc;
-  --popover: #2a2220;
-  --popover-foreground: #f5f5dc;
-  --secondary: #2a2220;
-  --secondary-foreground: #d6bca6;
-  --muted: #5a4d45;
-  --muted-foreground: #c9a876;
-  --accent: #d6bca6;
-  --accent-foreground: #3b2f2f;
-  --destructive: #ff6b6b;
-  --destructive-foreground: #ffffff;
-  --border: #5a4d45;
-  --input: #2a2220;
-  --ring: #d6bca6;
-  --chart-1: #d6bca6;
-  --chart-2: #f5f5dc;
-  --chart-3: #013220;
-  --chart-4: #8b7355;
-  --chart-5: #c9a876;
-  --sidebar: #3b2f2f;
-  --sidebar-foreground: #f5f5dc;
-  --sidebar-accent: #d6bca6;
-  --sidebar-accent-foreground: #3b2f2f;
-  --sidebar-border: #5a4d45;
-  --sidebar-ring: #d6bca6;
+  --primary: var(--color-blue-700);
+  --primary-foreground: var(--color-blue-50);
+  --sidebar-primary: var(--color-blue-500);
+  --sidebar-primary-foreground: var(--color-blue-50);
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.85 0.005 65);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.85 0.005 65);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.85 0.005 65);
+  --secondary: oklch(0.24 0.006 286.033);
+  --secondary-foreground: oklch(0.7 0.005 65);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground:  oklch(0.92 0.005 65);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.488 0.243 264.376);
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.85 0.005 65);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.488 0.243 264.376);
 }
 
 @layer base {
@@ -184,14 +180,14 @@
     background-color: var(--cream);
   }
   .gradient-gold {
-    background: linear-gradient(135deg, #d6bca6, #e8dcc8);
+    background: linear-gradient(135deg, oklch(0.72 0.12 75), oklch(0.82 0.09 80));
   }
   .gradient-dark {
-    background: linear-gradient(135deg, #3b2f2f, #2a2220);
+    background: linear-gradient(135deg, oklch(0.12 0.01 30), oklch(0.2 0.01 30));
   }
   .section-divider {
     height: 1px;
-    background: linear-gradient(to right, transparent, #d6bca6, transparent);
+    background: linear-gradient(to right, transparent, oklch(0.72 0.12 75), transparent);
   }
   .gold-underline {
     position: relative;
@@ -204,55 +200,160 @@
     left: 50%;
     transform: translateX(-50%);
     width: 60px;
-    height: 3px;
-    background-color: var(--gold);
+    height: 2px;
+    background: linear-gradient(to right, oklch(0.72 0.12 75), oklch(0.82 0.09 80));
     border-radius: 2px;
   }
-  .card-premium {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 220, 0.9));
-    border: 1px solid rgba(214, 188, 166, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-  }
-  .card-premium-dark {
-    background: linear-gradient(135deg, rgba(59, 47, 47, 0.95), rgba(42, 34, 32, 0.9));
-    border: 1px solid rgba(214, 188, 166, 0.2);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-  }
-  .text-gradient-gold {
-    background: linear-gradient(135deg, #d6bca6, #f5f5dc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .button-gold {
-    background-color: var(--gold);
-    color: #ffffff;
+  .btn-whatsapp {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    border-radius: 9999px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    text-decoration: none;
     border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
   }
-  .button-gold:hover {
-    background-color: #c9a876;
+  .btn-whatsapp:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(214, 188, 166, 0.3);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
   }
-  .button-outline-gold {
-    background-color: transparent;
-    color: var(--gold);
-    border: 2px solid var(--gold);
-    border-radius: 8px;
-    padding: 10px 22px;
-    font-weight: 600;
+  .btn-gold {
+    background: linear-gradient(135deg, oklch(0.62 0.09 75), oklch(0.72 0.12 75));
+    color: white;
+    border-radius: 9999px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(180, 140, 60, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    text-decoration: none;
+    border: none;
     cursor: pointer;
+  }
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(180, 140, 60, 0.5);
+  }
+  .card-premium {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+    border: 1px solid oklch(0.93 0.005 85);
     transition: all 0.3s ease;
   }
-  .button-outline-gold:hover {
-    background-color: var(--gold);
-    color: #ffffff;
+  .card-premium:hover {
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+  }
+  .floating-whatsapp {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    animation: pulseWhatsapp 2.5s ease-in-out infinite;
+  }
+  .floating-whatsapp:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.7);
+    animation: none;
+  }
+  @keyframes pulseWhatsapp {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); }
+    50% { box-shadow: 0 4px 35px rgba(37, 211, 102, 0.8), 0 0 0 8px rgba(37, 211, 102, 0.15); }
+  }
+  .testimonial-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+    border-left: 3px solid oklch(0.72 0.12 75);
+    transition: all 0.3s ease;
+  }
+  .testimonial-card:hover {
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+  }
+  .before-after-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+  .before-after-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .before-after-card:hover img {
+    transform: scale(1.03);
+  }
+}
+
+@layer components {
+  /**
+   * Custom container utility that centers content and adds responsive padding.
+   *
+   * This overrides Tailwind's default container behavior to:
+   * - Auto-center content (mx-auto)
+   * - Add responsive horizontal padding
+   * - Set max-width for large screens
+   *
+   * Usage: <div className="container">...</div>
+   *
+   * For custom widths, use max-w-* utilities directly:
+   * <div className="max-w-6xl mx-auto px-4">...</div>
+   */
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* 16px - mobile padding */
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem; /* 32px - desktop padding */
+      padding-right: 2rem;
+      max-width: 1280px; /* Standard content width */
+    }
   }
 }
