@@ -52,3 +52,11 @@
 - [x] Implementar exportação CSV/JSON
 - [x] Criar testes para procedures de admin (17 testes passando)
 - [x] Verificar proteção de rota (apenas admin)
+
+
+## Novas Funcionalidades - Fase 2
+- [x] Atualizar paleta de cores com RGB exata: #f5f5dc, #d6bca6, #3b2f2f, #013220
+- [x] Adicionar destaque de estatísticas na Hero Section (500+, 8+, 100%)
+- [x] Implementar carrossel de imagens na seção Resultados
+- [x] Adicionar seção de Perguntas Frequentes (FAQ) com accordion
+- [x] Testes e validação (17 testes passando)

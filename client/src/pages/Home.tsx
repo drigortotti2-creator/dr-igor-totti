@@ -77,6 +77,184 @@ function SectionHeader({ eyebrow, title, subtitle, light = false }: {
   );
 }
 
+// FAQ Component
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const faqs = [
+    {
+      question: "Quanto tempo dura uma faceta de resina composta?",
+      answer: "Com os cuidados adequados, as facetas de resina composta duram entre 5 a 10 anos. A durabilidade depende de hábitos de higiene, alimentação e se há bruxismo.",
+    },
+    {
+      question: "O procedimento dói?",
+      answer: "Não! O procedimento é totalmente indolor. Usamos anestesia local e técnicas modernas para garantir seu conforto durante toda a sessão.",
+    },
+    {
+      question: "Quantas sessões são necessárias?",
+      answer: "A maioria dos casos é resolvida em 1 a 2 sessões. Dependendo da complexidade, pode ser necessário mais tempo. Avaliaremos seu caso durante a consulta.",
+    },
+    {
+      question: "Qual é o custo das facetas de resina?",
+      answer: "O valor varia conforme o número de dentes e a complexidade do caso. As facetas de resina são mais acessíveis que as de porcelana. Oferecemos planos de pagamento flexíveis.",
+    },
+    {
+      question: "Posso comer normalmente após o procedimento?",
+      answer: "Sim! Você pode comer normalmente após 2 horas. Recomendamos evitar alimentos muito duros ou pegajosos nos primeiros dias.",
+    },
+    {
+      question: "As facetas de resina mancham?",
+      answer: "A resina composta pode sofrer pequenas alterações de cor com o tempo, especialmente se exposta a alimentos e bebidas com corantes. Limpezas periódicas mantêm o brilho.",
+    },
+  ];
+
+  return (
+    <section className="py-24 px-6" style={{ background: "var(--cream)" }}>
+      <div className="max-w-4xl mx-auto">
+        <SectionHeader
+          eyebrow="Dúvidas Frequentes"
+          title="Perguntas & Respostas"
+          subtitle="Respondemos as principais dúvidas sobre facetas de resina composta"
+        />
+
+        <div className="space-y-4">
+          {faqs.map((faq, i) => (
+            <div
+              key={i}
+              className="rounded-lg overflow-hidden transition-all"
+              style={{
+                background: "white",
+                border: "1px solid var(--border)",
+              }}
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full px-6 py-5 flex items-center justify-between hover:bg-gray-50 transition-colors"
+              >
+                <p className="font-body font-700 text-left" style={{ color: "var(--charcoal)" }}>
+                  {faq.question}
+                </p>
+                <span
+                  className="font-body font-700 text-xl transition-transform"
+                  style={{
+                    color: "var(--gold)",
+                    transform: openIndex === i ? "rotate(180deg)" : "rotate(0deg)",
+                  }}
+                >
+                  ▼
+                </span>
+              </button>
+              {openIndex === i && (
+                <div className="px-6 pb-5 border-t border-gray-100">
+                  <p className="font-body text-sm leading-relaxed" style={{ color: "oklch(0.45 0.01 30)" }}>
+                    {faq.answer}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Results Carousel Component
+function ResultsCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const results = [
+    { img: IMAGES.beforeAfter1, name: "Paciente 1", desc: "Facetas de Resina — Sorriso Harmônico" },
+    { img: IMAGES.beforeAfter2, name: "Paciente 2", desc: "Design do Sorriso Completo" },
+    { img: IMAGES.beforeAfter3, name: "Paciente 3", desc: "Fechamento de Diastema + Facetas" },
+    { img: IMAGES.smileWoman, name: "Paciente 4", desc: "Facetas + Clareamento" },
+    { img: IMAGES.smileCloseup, name: "Paciente 5", desc: "Remodelação Completa do Sorriso" },
+  ];
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % results.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + results.length) % results.length);
+  };
+
+  return (
+    <section id="resultados" className="py-24 px-6" style={{ background: "var(--charcoal)" }}>
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader
+          eyebrow="Resultados Reais"
+          title="Antes & Depois"
+          subtitle="Cada transformação é uma história de autoestima recuperada. Veja os resultados reais de nossos pacientes."
+          light
+        />
+
+        {/* Carousel */}
+        <div className="relative mb-12">
+          <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "16/9" }}>
+            <img
+              src={results[currentIndex].img}
+              alt={results[currentIndex].name}
+              className="w-full h-full object-cover transition-opacity duration-500"
+            />
+            <div className="absolute inset-0 flex flex-col justify-end p-8 z-10" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }}>
+              <p className="font-body text-xs tracking-widest uppercase mb-2" style={{ color: "var(--gold)" }}>
+                {results[currentIndex].name}
+              </p>
+              <p className="font-body text-xl text-white font-700">{results[currentIndex].desc}</p>
+            </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center transition-all font-body font-700 text-lg"
+            style={{ background: "rgba(255,255,255,0.2)", color: "white" }}
+            onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.4)"; }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.2)"; }}
+          >
+            ←
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center transition-all font-body font-700 text-lg"
+            style={{ background: "rgba(255,255,255,0.2)", color: "white" }}
+            onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.4)"; }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.2)"; }}
+          >
+            →
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center gap-2 mt-6">
+            {results.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className="w-2 h-2 rounded-full transition-all"
+                style={{
+                  background: i === currentIndex ? "var(--gold)" : "rgba(255,255,255,0.3)",
+                  width: i === currentIndex ? "24px" : "8px",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="text-center">
+          <a
+            href={buildWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-whatsapp"
+          >
+            <WhatsAppIcon size={20} />
+            Quero um Sorriso Assim
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // Lead Form Component
 function LeadForm() {
   const [form, setForm] = useState({ fullName: "", whatsapp: "", city: "", interest: "" });
@@ -321,17 +499,17 @@ export default function Home() {
             {/* Social proof strip */}
             <div className="flex items-center gap-6 mt-12 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.2)" }}>
               <div className="text-center">
-                <p className="font-heading text-3xl font-light text-white">500+</p>
+                <p className="font-heading text-3xl font-light" style={{ color: "var(--gold)" }}>500+</p>
                 <p className="font-body text-xs text-white/70 tracking-wider uppercase">Sorrisos Transformados</p>
               </div>
               <div className="w-px h-10 bg-white/20" />
               <div className="text-center">
-                <p className="font-heading text-3xl font-light text-white">8+</p>
+                <p className="font-heading text-3xl font-light" style={{ color: "var(--gold)" }}>8+</p>
                 <p className="font-body text-xs text-white/70 tracking-wider uppercase">Anos de Experiência</p>
               </div>
               <div className="w-px h-10 bg-white/20" />
               <div className="text-center">
-                <p className="font-heading text-3xl font-light text-white">100%</p>
+                <p className="font-heading text-3xl font-light" style={{ color: "var(--gold)" }}>100%</p>
                 <p className="font-body text-xs text-white/70 tracking-wider uppercase">Satisfação Garantida</p>
               </div>
             </div>
@@ -487,64 +665,7 @@ export default function Home() {
       </section>
 
       {/* ─── BEFORE & AFTER GALLERY ─── */}
-      <section id="resultados" className="py-24 px-6" style={{ background: "var(--charcoal)" }}>
-        <div className="max-w-6xl mx-auto">
-          <SectionHeader
-            eyebrow="Resultados Reais"
-            title="Antes & Depois"
-            subtitle="Cada transformação é uma história de autoestima recuperada. Veja os resultados reais de nossos pacientes."
-            light
-          />
-
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            {[
-              { img: IMAGES.beforeAfter1, name: "Paciente 1", desc: "Facetas de Resina — Sorriso Harmônico" },
-              { img: IMAGES.beforeAfter2, name: "Paciente 2", desc: "Design do Sorriso Completo" },
-              { img: IMAGES.beforeAfter3, name: "Paciente 3", desc: "Fechamento de Diastema + Facetas" },
-            ].map((item, i) => (
-              <div key={i} className="before-after-card group cursor-pointer" style={{ aspectRatio: "4/3" }}>
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 flex flex-col justify-end p-5 z-10" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }}>
-                  <p className="font-body text-xs tracking-widest uppercase mb-1" style={{ color: "var(--gold)" }}>
-                    {item.name}
-                  </p>
-                  <p className="font-body text-sm text-white font-700">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Additional gallery row */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            <div className="before-after-card" style={{ aspectRatio: "16/9" }}>
-              <img src={IMAGES.smileWoman} alt="Resultado 4" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 flex flex-col justify-end p-5 z-10" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }}>
-                <p className="font-body text-xs tracking-widest uppercase mb-1" style={{ color: "var(--gold)" }}>Paciente 4</p>
-                <p className="font-body text-sm text-white font-700">Facetas + Clareamento</p>
-              </div>
-            </div>
-            <div className="before-after-card" style={{ aspectRatio: "16/9" }}>
-              <img src={IMAGES.smileCloseup} alt="Resultado 5" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 flex flex-col justify-end p-5 z-10" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }}>
-                <p className="font-body text-xs tracking-widest uppercase mb-1" style={{ color: "var(--gold)" }}>Paciente 5</p>
-                <p className="font-body text-sm text-white font-700">Remodelação Completa do Sorriso</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <a
-              href={buildWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp"
-            >
-              <WhatsAppIcon size={20} />
-              Quero um Sorriso Assim
-            </a>
-          </div>
-        </div>
-      </section>
+      <ResultsCarousel />
 
       {/* ─── TESTIMONIALS ─── */}
       <section id="depoimentos" className="py-24 px-6" style={{ background: "var(--cream)" }}>
@@ -619,6 +740,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ─── FAQ ─── */}
+      <FAQSection />
 
       {/* ─── DIFFERENTIALS ─── */}
       <section id="about" className="py-24 px-6" style={{ background: "white" }}>
