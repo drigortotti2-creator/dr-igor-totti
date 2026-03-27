@@ -1,6 +1,4 @@
-'use client';
-
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
@@ -8,11 +6,12 @@ import { toast } from "sonner";
 const IMAGES = {
   heroSmile: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/hero-smile_99ee2167.jpg",
   dentistPortrait: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/dentist-portrait_a9f61fcd.jpg",
+  smileCloseup: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/smile-closeup_7cdf2293.jpg",
+  smileWoman: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/smile-woman_0bdde4ab.jpg",
   beforeAfter1: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/before-after-1_74c23aa4.png",
   beforeAfter2: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/before-after-2_f59bab21.jpg",
   beforeAfter3: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/before-after-3_07995cb8.jpg",
-  beforeAfter4: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/smile-closeup_7cdf2293.jpg",
-  beforeAfter5: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/smile-woman_0bdde4ab.jpg",
+  clinic: "https://d2xsxph8kpxj0f.cloudfront.net/310519663452340162/f3MExMXZ9LFBQoZQkZPCsr/clinic_6630c3d3.jpg",
 };
 
 const WHATSAPP_NUMBER = "5511999999999";
@@ -24,21 +23,21 @@ function buildWhatsAppUrl(name?: string) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
 
-// WhatsApp Icon
-function WhatsAppIcon({ size = 24 }: { size?: number }) {
+// WhatsApp SVG Icon
+function WhatsAppIcon({ size = 24, className = "" }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
   );
 }
 
-// Stars Component
+// Star Rating
 function Stars({ count = 5 }: { count?: number }) {
   return (
     <div className="flex gap-1">
       {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ color: "#d6bca6" }}>
+        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ color: "var(--gold)" }}>
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
       ))}
@@ -46,97 +45,41 @@ function Stars({ count = 5 }: { count?: number }) {
   );
 }
 
-// Scroll Observer Hook
-const useScrollObserver = () => {
-  const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleElements((prev) => new Set([...Array.from(prev), entry.target.id]));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = document.querySelectorAll("[data-scroll-trigger]");
-    elements.forEach((el) => observer.observe(el));
-
-    return () => elements.forEach((el) => observer.unobserve(el));
-  }, []);
-
-  return visibleElements;
-}
-
-// Carousel Component
-function BeforeAfterCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const images = [IMAGES.beforeAfter1, IMAGES.beforeAfter2, IMAGES.beforeAfter3, IMAGES.beforeAfter4, IMAGES.beforeAfter5];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
+// Section Header Component
+function SectionHeader({ eyebrow, title, subtitle, light = false }: {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  light?: boolean;
+}) {
   return (
-    <div className="relative w-full h-96 md:h-[500px] rounded-2xl overflow-hidden group">
-      {/* Carousel Container */}
-      <div className="relative w-full h-full">
-        {images.map((img, idx) => (
-          <div
-            key={idx}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              idx === currentIndex ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <img src={img} alt={`Resultado ${idx + 1}`} className="w-full h-full object-cover" />
-            {/* Blend overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-          </div>
-        ))}
-      </div>
-
-      {/* Navigation Dots */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {images.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentIndex(idx)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              idx === currentIndex ? "bg-white w-8" : "bg-white/50 hover:bg-white/75"
-            }`}
-            aria-label={`Slide ${idx + 1}`}
-          />
-        ))}
-      </div>
-
-      {/* Navigation Arrows */}
-      <button
-        onClick={() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all opacity-0 group-hover:opacity-100"
+    <div className="text-center mb-16">
+      {eyebrow && (
+        <p className="font-body text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "var(--gold)" }}>
+          {eyebrow}
+        </p>
+      )}
+      <h2
+        className="font-heading text-4xl md:text-5xl font-light mb-6 gold-underline"
+        style={{ color: light ? "white" : "var(--charcoal)" }}
       >
-        ←
-      </button>
-      <button
-        onClick={() => setCurrentIndex((prev) => (prev + 1) % images.length)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all opacity-0 group-hover:opacity-100"
-      >
-        →
-      </button>
+        {title}
+      </h2>
+      {subtitle && (
+        <p
+          className="font-body text-lg max-w-2xl mx-auto mt-8 leading-relaxed"
+          style={{ color: light ? "rgba(255,255,255,0.8)" : "oklch(0.45 0.01 30)" }}
+        >
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }
 
-// FAQ Component with Popups
+// FAQ Component
 function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const visibleElements = useScrollObserver();
-
   const faqs = [
     {
       question: "Quanto tempo dura uma faceta de resina composta?",
@@ -155,55 +98,56 @@ function FAQSection() {
       answer: "O valor varia conforme o número de dentes e a complexidade do caso. As facetas de resina são mais acessíveis que as de porcelana. Oferecemos planos de pagamento flexíveis.",
     },
     {
-      question: "Como cuidar das facetas após o procedimento?",
-      answer: "Evite alimentos muito duros, não use os dentes para abrir objetos, mantenha uma boa higiene bucal e visite regularmente o consultório para acompanhamento.",
+      question: "Posso comer normalmente após o procedimento?",
+      answer: "Sim! Você pode comer normalmente após 2 horas. Recomendamos evitar alimentos muito duros ou pegajosos nos primeiros dias.",
+    },
+    {
+      question: "As facetas de resina mancham?",
+      answer: "A resina composta pode sofrer pequenas alterações de cor com o tempo, especialmente se exposta a alimentos e bebidas com corantes. Limpezas periódicas mantêm o brilho.",
     },
   ];
 
   return (
-    <section id="faq" className="py-20 px-4 md:px-8 relative section-fade-bottom">
+    <section className="py-24 px-6" style={{ background: "var(--cream)" }}>
       <div className="max-w-4xl mx-auto">
-        <div
-          data-scroll-trigger
-          className={`text-center mb-16 ${visibleElements.has("faq-header") ? "animate-fade-in-up" : "opacity-0"}`}
-          id="faq-header"
-        >
-          <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#d6bca6" }}>
-            DÚVIDAS FREQUENTES
-          </p>
-          <h2 className="font-heading text-4xl md:text-5xl mb-6" style={{ color: "#d6bca6" }}>
-            Perguntas Comuns
-          </h2>
-        </div>
+        <SectionHeader
+          eyebrow="Dúvidas Frequentes"
+          title="Perguntas & Respostas"
+          subtitle="Respondemos as principais dúvidas sobre facetas de resina composta"
+        />
 
         <div className="space-y-4">
-          {faqs.map((faq, idx) => (
+          {faqs.map((faq, i) => (
             <div
-              key={idx}
-              data-scroll-trigger
-              className={`transition-all duration-300 ${visibleElements.has(`faq-item-${idx}`) ? "animate-fade-in-up" : "opacity-0"}`}
-              id={`faq-item-${idx}`}
+              key={i}
+              className="rounded-lg overflow-hidden transition-all"
+              style={{
+                background: "white",
+                border: "1px solid var(--border)",
+              }}
             >
               <button
-                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="w-full text-left p-6 rounded-lg transition-all duration-300"
-                style={{
-                  backgroundColor: openIndex === idx ? "rgba(214, 188, 166, 0.15)" : "transparent",
-                  borderBottom: "1px solid rgba(214, 188, 166, 0.2)",
-                }}
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full px-6 py-5 flex items-center justify-between hover:bg-gray-50 transition-colors"
               >
-                <div className="flex items-center justify-between">
-                  <h3 className="font-heading text-lg" style={{ color: "#d6bca6" }}>
-                    {faq.question}
-                  </h3>
-                  <span className="text-2xl transition-transform duration-300" style={{ transform: openIndex === idx ? "rotate(180deg)" : "rotate(0deg)" }}>
-                    ▼
-                  </span>
-                </div>
+                <p className="font-body font-700 text-left" style={{ color: "var(--charcoal)" }}>
+                  {faq.question}
+                </p>
+                <span
+                  className="font-body font-700 text-xl transition-transform"
+                  style={{
+                    color: "var(--gold)",
+                    transform: openIndex === i ? "rotate(180deg)" : "rotate(0deg)",
+                  }}
+                >
+                  ▼
+                </span>
               </button>
-              {openIndex === idx && (
-                <div className="px-6 py-4 bg-rgba(59, 47, 47, 0.3) rounded-b-lg animate-fade-in">
-                  <p className="text-white/80 leading-relaxed">{faq.answer}</p>
+              {openIndex === i && (
+                <div className="px-6 pb-5 border-t border-gray-100">
+                  <p className="font-body text-sm leading-relaxed" style={{ color: "oklch(0.45 0.01 30)" }}>
+                    {faq.answer}
+                  </p>
                 </div>
               )}
             </div>
@@ -214,68 +158,97 @@ function FAQSection() {
   );
 }
 
-// Video Section Component
-function VideoSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const visibleElements = useScrollObserver();
+// Results Carousel Component
+function ResultsCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const results = [
+    { img: IMAGES.beforeAfter1, name: "Paciente 1", desc: "Facetas de Resina — Sorriso Harmônico" },
+    { img: IMAGES.beforeAfter2, name: "Paciente 2", desc: "Design do Sorriso Completo" },
+    { img: IMAGES.beforeAfter3, name: "Paciente 3", desc: "Fechamento de Diastema + Facetas" },
+    { img: IMAGES.smileWoman, name: "Paciente 4", desc: "Facetas + Clareamento" },
+    { img: IMAGES.smileCloseup, name: "Paciente 5", desc: "Remodelação Completa do Sorriso" },
+  ];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && videoRef.current) {
-            videoRef.current.play();
-          } else if (!entry.isIntersecting && videoRef.current) {
-            videoRef.current.pause();
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % results.length);
+  };
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
-    }
-
-    return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current);
-      }
-    };
-  }, []);
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + results.length) % results.length);
+  };
 
   return (
-    <section id="video" className="py-20 px-4 md:px-8 relative section-fade-bottom">
+    <section id="resultados" className="py-24 px-6" style={{ background: "var(--charcoal)" }}>
       <div className="max-w-6xl mx-auto">
-        <div
-          data-scroll-trigger
-          className={`text-center mb-12 ${visibleElements.has("video-header") ? "animate-fade-in-up" : "opacity-0"}`}
-          id="video-header"
-        >
-          <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#d6bca6" }}>
-            DEPOIMENTO
-          </p>
-          <h2 className="font-heading text-4xl md:text-5xl mb-6" style={{ color: "#d6bca6" }}>
-            Veja o Depoimento de Nossos Pacientes
-          </h2>
+        <SectionHeader
+          eyebrow="Resultados Reais"
+          title="Antes & Depois"
+          subtitle="Cada transformação é uma história de autoestima recuperada. Veja os resultados reais de nossos pacientes."
+          light
+        />
+
+        {/* Carousel */}
+        <div className="relative mb-12">
+          <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "16/9" }}>
+            <img
+              src={results[currentIndex].img}
+              alt={results[currentIndex].name}
+              className="w-full h-full object-cover transition-opacity duration-500"
+            />
+            <div className="absolute inset-0 flex flex-col justify-end p-8 z-10" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }}>
+              <p className="font-body text-xs tracking-widest uppercase mb-2" style={{ color: "var(--gold)" }}>
+                {results[currentIndex].name}
+              </p>
+              <p className="font-body text-xl text-white font-700">{results[currentIndex].desc}</p>
+            </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center transition-all font-body font-700 text-lg"
+            style={{ background: "rgba(255,255,255,0.2)", color: "white" }}
+            onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.4)"; }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.2)"; }}
+          >
+            ←
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center transition-all font-body font-700 text-lg"
+            style={{ background: "rgba(255,255,255,0.2)", color: "white" }}
+            onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.4)"; }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.2)"; }}
+          >
+            →
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center gap-2 mt-6">
+            {results.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className="w-2 h-2 rounded-full transition-all"
+                style={{
+                  background: i === currentIndex ? "var(--gold)" : "rgba(255,255,255,0.3)",
+                  width: i === currentIndex ? "24px" : "8px",
+                }}
+              />
+            ))}
+          </div>
         </div>
 
-        <div
-          data-scroll-trigger
-          className={`relative w-full aspect-video rounded-2xl overflow-hidden ${
-            visibleElements.has("video-container") ? "animate-fade-in-up" : "opacity-0"
-          }`}
-          id="video-container"
-        >
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            controls
-            poster={IMAGES.heroSmile}
+        <div className="text-center">
+          <a
+            href={buildWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-whatsapp"
           >
-            <source src="https://example.com/video.mp4" type="video/mp4" />
-            Seu navegador não suporta vídeos HTML5.
-          </video>
+            <WhatsAppIcon size={20} />
+            Quero um Sorriso Assim
+          </a>
         </div>
       </div>
     </section>
@@ -284,423 +257,483 @@ function VideoSection() {
 
 // Lead Form Component
 function LeadForm() {
-  const [formData, setFormData] = useState({ fullName: "", whatsapp: "", city: "", interest: "" });
-  const [loading, setLoading] = useState(false);
-  const submitLead = trpc.leads.submit.useMutation();
+  const [form, setForm] = useState({ fullName: "", whatsapp: "", city: "", interest: "" });
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-        await submitLead.mutateAsync({ fullName: formData.fullName, whatsapp: formData.whatsapp, city: formData.city, interest: formData.interest });
-      toast.success("Agendamento enviado! Redirecionando para WhatsApp...");
-      window.location.href = buildWhatsAppUrl(formData.fullName);
-      setFormData({ fullName: "", whatsapp: "", city: "", interest: "" });
-    } catch (error) {
+  const submitLead = trpc.leads.submit.useMutation({
+    onSuccess: (data) => {
+      setSubmitted(true);
+      toast.success("Mensagem enviada! Redirecionando para o WhatsApp...");
+      setTimeout(() => {
+        window.open(data.whatsappUrl, "_blank");
+      }, 1200);
+    },
+    onError: (err) => {
       toast.error("Erro ao enviar. Tente novamente.");
-    } finally {
-      setLoading(false);
+      console.error(err);
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.fullName || !form.whatsapp || !form.city) {
+      toast.error("Preencha os campos obrigatórios.");
+      return;
     }
+    submitLead.mutate(form);
   };
 
+  if (submitted) {
+    return (
+      <div className="text-center py-12">
+        <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+            <path d="M20 6L9 17l-5-5"/>
+            <polyline points="20 6 9 17 4 12" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <h3 className="font-heading text-3xl font-light mb-3" style={{ color: "var(--charcoal)" }}>
+          Mensagem Enviada!
+        </h3>
+        <p className="font-body text-base" style={{ color: "oklch(0.45 0.01 30)" }}>
+          Você será redirecionado para o WhatsApp em instantes...
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <input
-        type="text"
-        placeholder="Seu Nome Completo"
-        value={formData.fullName}
-        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-        required
-        className="w-full px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/50"
-      />
-      <input
-        type="tel"
-        placeholder="WhatsApp (com DDD)"
-        value={formData.whatsapp}
-        onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-        required
-        className="w-full px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/50"
-      />
-      <input
-        type="text"
-        placeholder="Sua Cidade"
-        value={formData.city}
-        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-        required
-        className="w-full px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/50"
-      />
-      <select
-        value={formData.interest}
-        onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
-        className="w-full px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white/50"
-      >
-        <option value="">Selecione seu interesse</option>
-        <option value="facetas">Facetas de Resina</option>
-        <option value="clareamento">Clareamento</option>
-        <option value="outros">Outros Tratamentos</option>
-      </select>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div>
+        <label className="font-body text-sm font-700 mb-2 block" style={{ color: "var(--charcoal)" }}>
+          Nome Completo <span style={{ color: "var(--gold)" }}>*</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Seu nome completo"
+          value={form.fullName}
+          onChange={e => setForm(f => ({ ...f, fullName: e.target.value }))}
+          className="w-full px-4 py-3 rounded-xl font-body text-sm outline-none transition-all"
+          style={{
+            border: "1.5px solid oklch(0.91 0.006 85)",
+            background: "white",
+            color: "var(--charcoal)",
+          }}
+          onFocus={e => e.target.style.borderColor = "var(--gold)"}
+          onBlur={e => e.target.style.borderColor = "oklch(0.91 0.006 85)"}
+          required
+        />
+      </div>
+      <div>
+        <label className="font-body text-sm font-700 mb-2 block" style={{ color: "var(--charcoal)" }}>
+          WhatsApp <span style={{ color: "var(--gold)" }}>*</span>
+        </label>
+        <input
+          type="tel"
+          placeholder="(11) 99999-9999"
+          value={form.whatsapp}
+          onChange={e => setForm(f => ({ ...f, whatsapp: e.target.value }))}
+          className="w-full px-4 py-3 rounded-xl font-body text-sm outline-none transition-all"
+          style={{
+            border: "1.5px solid oklch(0.91 0.006 85)",
+            background: "white",
+            color: "var(--charcoal)",
+          }}
+          onFocus={e => e.target.style.borderColor = "var(--gold)"}
+          onBlur={e => e.target.style.borderColor = "oklch(0.91 0.006 85)"}
+          required
+        />
+      </div>
+      <div>
+        <label className="font-body text-sm font-700 mb-2 block" style={{ color: "var(--charcoal)" }}>
+          Cidade <span style={{ color: "var(--gold)" }}>*</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Sua cidade"
+          value={form.city}
+          onChange={e => setForm(f => ({ ...f, city: e.target.value }))}
+          className="w-full px-4 py-3 rounded-xl font-body text-sm outline-none transition-all"
+          style={{
+            border: "1.5px solid oklch(0.91 0.006 85)",
+            background: "white",
+            color: "var(--charcoal)",
+          }}
+          onFocus={e => e.target.style.borderColor = "var(--gold)"}
+          onBlur={e => e.target.style.borderColor = "oklch(0.91 0.006 85)"}
+          required
+        />
+      </div>
+      <div>
+        <label className="font-body text-sm font-700 mb-2 block" style={{ color: "var(--charcoal)" }}>
+          O que você deseja melhorar no seu sorriso? <span className="font-body text-xs" style={{ color: "oklch(0.55 0.01 30)" }}>(opcional)</span>
+        </label>
+        <select
+          value={form.interest}
+          onChange={e => setForm(f => ({ ...f, interest: e.target.value }))}
+          className="w-full px-4 py-3 rounded-xl font-body text-sm outline-none transition-all"
+          style={{
+            border: "1.5px solid oklch(0.91 0.006 85)",
+            background: "white",
+            color: form.interest ? "var(--charcoal)" : "oklch(0.6 0.01 30)",
+          }}
+          onFocus={e => e.target.style.borderColor = "var(--gold)"}
+          onBlur={e => e.target.style.borderColor = "oklch(0.91 0.006 85)"}
+        >
+          <option value="">Selecione uma opção</option>
+          <option value="Facetas de Resina Composta">Facetas de Resina Composta</option>
+          <option value="Clareamento Dental">Clareamento Dental</option>
+          <option value="Design do Sorriso">Design do Sorriso</option>
+          <option value="Outros procedimentos estéticos">Outros procedimentos estéticos</option>
+        </select>
+      </div>
       <button
         type="submit"
-        disabled={loading}
-        className="w-full btn-whatsapp justify-center"
+        disabled={submitLead.isPending}
+        className="btn-whatsapp w-full justify-center text-base py-4"
+        style={{ opacity: submitLead.isPending ? 0.7 : 1 }}
       >
-        <WhatsAppIcon size={20} />
-        {loading ? "Enviando..." : "Agendar Consulta"}
+        <WhatsAppIcon size={22} />
+        {submitLead.isPending ? "Enviando..." : "Quero Agendar Minha Consulta"}
       </button>
+      <p className="font-body text-xs text-center" style={{ color: "oklch(0.55 0.01 30)" }}>
+        🔒 Seus dados estão protegidos. Não enviamos spam.
+      </p>
     </form>
   );
 }
 
-// Navbar Component
-function Navbar() {
-  const navItems = [
-    { label: "Nosso espaço", href: "#about" },
-    { label: "Tratamentos", href: "#treatments" },
-    { label: "Sobre", href: "#about-doctor" },
-    { label: "Resultados", href: "#resultados" },
-    { label: "Depoimentos", href: "#testimonials" },
-    { label: "Contato", href: "#contact" },
-    { label: "Localização", href: "#location" },
-  ];
-
-  return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4"
-      style={{
-        background: "linear-gradient(to right, rgba(59, 47, 47, 0.95) 0%, rgba(59, 47, 47, 0.7) 70%, rgba(59, 47, 47, 0) 100%)",
-      }}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo/Signature */}
-        <div className="font-heading text-2xl" style={{ color: "#d6bca6" }}>
-          Igor
-        </div>
-
-        {/* Menu Items */}
-        <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="text-sm text-white/80 hover:text-white transition-colors duration-300"
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
-
-        {/* CTA Button */}
-        <a
-          href="#contact"
-          className="btn-primary text-sm"
-          style={{ backgroundColor: "#013220" }}
-        >
-          AGENDAR CONSULTA
-        </a>
-      </div>
-    </nav>
-  );
-}
-
-// Main Home Component
 export default function Home() {
-  const visibleElements = useScrollObserver();
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   return (
-    <div className="w-full overflow-hidden" style={{ backgroundColor: "#3b2f2f" }}>
-      {/* Navbar */}
-      <Navbar />
+    <div className="min-h-screen" style={{ background: "var(--background)" }}>
 
-      {/* Floating WhatsApp Button */}
+      {/* ─── FLOATING WHATSAPP BUTTON ─── */}
       <a
         href={buildWhatsAppUrl()}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-8 right-8 z-40 btn-whatsapp shadow-lg hover:shadow-xl"
+        className="floating-whatsapp"
+        aria-label="Agendar via WhatsApp"
+        title="Fale conosco no WhatsApp"
       >
-        <WhatsAppIcon size={24} />
+        <WhatsAppIcon size={28} className="text-white" />
       </a>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 md:px-8 relative overflow-hidden section-fade-bottom">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left: Image */}
-          <div
-            data-scroll-trigger
-            className={`relative h-96 md:h-[600px] rounded-2xl overflow-hidden ${
-              visibleElements.has("hero-image") ? "animate-fade-in-up" : "opacity-0"
-            }`}
-            id="hero-image"
-          >
-            <img src={IMAGES.heroSmile} alt="Sorriso Perfeito" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+      {/* ─── NAVBAR ─── */}
+      <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: "linear-gradient(90deg, rgba(42, 42, 42, 0.95) 0%, rgba(26, 58, 58, 0.7) 50%, rgba(26, 58, 58, 0.1) 100%)", height: "64px", display: "flex", alignItems: "center", backdropFilter: "blur(8px)" }}>
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between px-6" style={{ gap: "2rem" }}>
+          {/* Assinatura SVG */}
+          <div className="flex items-center flex-shrink-0">
+            <svg width="60" height="40" viewBox="0 0 100 60" style={{ color: "rgba(255, 255, 255, 0.9)" }}>
+              <text x="5" y="35" fontFamily="cursive" fontSize="32" fontStyle="italic" fill="currentColor" opacity="0.9">Igor</text>
+            </svg>
           </div>
+          {/* Menu Items */}
+          <div className="flex items-center gap-8 flex-1 justify-center">
+            {[{ label: "Nosso espaço", href: "#about" }, { label: "Tratamentos", href: "#procedures" }, { label: "Sobre", href: "#about-doctor" }, { label: "Resultados", href: "#resultados" }, { label: "Depoimentos", href: "#depoimentos" }, { label: "Contato", href: "#contact" }, { label: "Localização", href: "#location" }].map((item) => (
+              <a key={item.label} href={item.href} onClick={(e) => { e.preventDefault(); const el = document.querySelector(item.href); if (el) el.scrollIntoView({ behavior: "smooth" }); }} className="font-body text-sm font-500 transition-colors hover:text-yellow-400" style={{ color: "rgba(255, 255, 255, 0.85)" }}>{item.label}</a>
+            ))}
+          </div>
+          {/* Right Section */}
+          <div className="flex items-center gap-5 flex-shrink-0">
+            <button onClick={scrollToForm} className="btn-gold text-xs px-5 py-2.5 flex-shrink-0">
+              Agendar Consulta
+            </button>
+          </div>
+        </div>
+      </nav>
 
-          {/* Right: Content - Aligned to Right */}
-          <div
-            data-scroll-trigger
-            className={`flex flex-col justify-center text-right ${
-              visibleElements.has("hero-content") ? "animate-fade-in-up" : "opacity-0"
-            }`}
-            id="hero-content"
-          >
-            <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#d6bca6" }}>
-              ESPECIALISTA EM ODONTOLOGIA ESTÉTICA
+      {/* ─── HERO SECTION ─── */}
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src={IMAGES.heroSmile}
+            alt="Sorriso perfeito"
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.2) 100%)" }} />
+        </div>
+
+        {/* Hero content */}
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-20">
+          <div className="max-w-xl">
+            <p className="font-body text-xs font-700 tracking-[0.3em] uppercase mb-6" style={{ color: "var(--gold)" }}>
+              ✦ Especialista em Odontologia Estética
             </p>
-
-            <h1 className="font-heading text-5xl md:text-6xl mb-6 leading-tight" style={{ color: "#d6bca6" }}>
-              Transforme Seu Sorriso e <em>Reconquiste</em> Sua Confiança
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-light text-white leading-tight mb-6">
+              Transforme Seu Sorriso e{" "}
+              <em className="not-italic" style={{ color: "var(--gold)", fontFamily: "'Instrument Serif', serif", fontWeight: "700", fontStyle: "italic" }}>Reconquiste</em>{" "}
+              Sua Confiança
             </h1>
-
-            <p className="text-lg text-white/80 mb-8 leading-relaxed max-w-lg ml-auto">
+            <p className="font-body text-lg md:text-xl text-white/85 mb-10 leading-relaxed">
               Especialista em facetas de resina composta com aparência natural. Resultados imediatos que vão mudar a forma como você se vê e como o mundo te vê.
             </p>
-
-            {/* Statistics Highlight */}
-            <div className="grid grid-cols-3 gap-6 mb-12 bg-rgba(214, 188, 166, 0.1) p-8 rounded-xl">
-              <div className="text-center">
-                <p className="font-heading text-3xl md:text-4xl" style={{ color: "#d6bca6" }}>
-                  500+
-                </p>
-                <p className="text-sm text-white/70 mt-2">Sorrisos Transformados</p>
-              </div>
-              <div className="text-center">
-                <p className="font-heading text-3xl md:text-4xl" style={{ color: "#d6bca6" }}>
-                  8+
-                </p>
-                <p className="text-sm text-white/70 mt-2">Anos de Experiência</p>
-              </div>
-              <div className="text-center">
-                <p className="font-heading text-3xl md:text-4xl" style={{ color: "#d6bca6" }}>
-                  100%
-                </p>
-                <p className="text-sm text-white/70 mt-2">Satisfação Garantida</p>
-              </div>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex gap-4 justify-end">
-              <a href={buildWhatsAppUrl()} className="btn-whatsapp">
-                <WhatsAppIcon size={20} />
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a
+                href={buildWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-whatsapp text-base"
+              >
+                <WhatsAppIcon size={22} />
                 Agendar no WhatsApp
               </a>
-              <a href="#resultados" className="btn-secondary">
+              <button
+                onClick={scrollToForm}
+                className="font-body font-700 text-sm tracking-widest uppercase px-8 py-4 rounded-full transition-all"
+                style={{ border: "2px solid rgba(255,255,255,0.6)", color: "white", background: "transparent" }}
+                onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.15)"; }}
+                onMouseLeave={e => { (e.target as HTMLElement).style.background = "transparent"; }}
+              >
                 Saiba Mais
+              </button>
+            </div>
+
+            {/* Social proof strip */}
+            <div className="flex items-center gap-6 mt-12 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.2)" }}>
+              <div className="text-center">
+                <p className="font-heading text-3xl font-light" style={{ color: "var(--gold)" }}>500+</p>
+                <p className="font-body text-xs text-white/70 tracking-wider uppercase">Sorrisos Transformados</p>
+              </div>
+              <div className="w-px h-10 bg-white/20" />
+              <div className="text-center">
+                <p className="font-heading text-3xl font-light" style={{ color: "var(--gold)" }}>8+</p>
+                <p className="font-body text-xs text-white/70 tracking-wider uppercase">Anos de Experiência</p>
+              </div>
+              <div className="w-px h-10 bg-white/20" />
+              <div className="text-center">
+                <p className="font-heading text-3xl font-light" style={{ color: "var(--gold)" }}>100%</p>
+                <p className="font-body text-xs text-white/70 tracking-wider uppercase">Satisfação Garantida</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+          <p className="font-body text-xs text-white/60 tracking-widest uppercase">Descubra</p>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
+        </div>
+      </section>
+
+      {/* ─── ABOUT DR. IGOR TOTTI ─── */}
+      <section id="about-doctor" className="py-24 px-6" style={{ background: "var(--cream)" }}>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            {/* Photo */}
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: "4/5" }}>
+                <img
+                  src={IMAGES.dentistPortrait}
+                  alt="Dr. Igor Totti"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 50%)" }} />
+              </div>
+              {/* Badge */}
+              <div className="absolute -bottom-6 -right-6 rounded-2xl p-5 shadow-xl" style={{ background: "white", border: "1px solid oklch(0.93 0.005 85)" }}>
+                <p className="font-heading text-3xl font-light" style={{ color: "var(--charcoal)" }}>8+</p>
+                <p className="font-body text-xs tracking-wider uppercase" style={{ color: "var(--gold)" }}>Anos de Experiência</p>
+              </div>
+              {/* Gold accent */}
+              <div className="absolute -top-4 -left-4 w-24 h-24 rounded-full opacity-20" style={{ background: "var(--gold)" }} />
+            </div>
+
+            {/* Text */}
+            <div>
+              <p className="font-body text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "var(--gold)" }}>
+                ✦ Conheça o Profissional
+              </p>
+              <h2 className="font-heading text-4xl md:text-5xl font-light mb-6" style={{ color: "var(--charcoal)" }}>
+                Dr. Igor Totti
+              </h2>
+              <div className="section-divider mb-8" style={{ width: "60px", height: "2px", background: "linear-gradient(to right, var(--gold), transparent)" }} />
+
+              <p className="font-body text-base leading-relaxed mb-6" style={{ color: "oklch(0.35 0.01 30)" }}>
+                Olá! Sou o Dr. Igor Totti, cirurgião-dentista especializado em Odontologia Estética com foco em facetas de resina composta. Ao longo de mais de 8 anos de carreira, já transformei centenas de sorrisos — e cada um deles tem uma história única que me motiva a ir além.
+              </p>
+              <p className="font-body text-base leading-relaxed mb-8" style={{ color: "oklch(0.35 0.01 30)" }}>
+                Acredito que um sorriso bonito vai muito além da estética: ele reflete autoestima, confiança e bem-estar. Por isso, meu trabalho começa ouvindo você — seus desejos, suas inseguranças e o sorriso que você sempre sonhou ter.
+              </p>
+
+              {/* Credentials */}
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {[
+                  { icon: "🎓", label: "Especialista em Odontologia Estética" },
+                  { icon: "🏆", label: "Membro da Sociedade Brasileira de Dentística" },
+                  { icon: "✨", label: "Especialista em Design do Sorriso" },
+                  { icon: "📚", label: "Atualização constante em técnicas modernas" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: "white", border: "1px solid oklch(0.93 0.005 85)" }}>
+                    <span className="text-xl">{item.icon}</span>
+                    <p className="font-body text-xs leading-snug" style={{ color: "oklch(0.35 0.01 30)" }}>{item.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href={buildWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-whatsapp"
+              >
+                <WhatsAppIcon size={20} />
+                Agendar Consulta
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Doctor Section */}
-      <section id="about-doctor" className="py-20 px-4 md:px-8 relative section-fade-bottom" style={{ backgroundColor: "#d6bca6" }}>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Image */}
-          <div
-            data-scroll-trigger
-            className={`relative h-96 md:h-[500px] rounded-2xl overflow-hidden ${
-              visibleElements.has("doctor-image") ? "animate-fade-in-up" : "opacity-0"
-            }`}
-            id="doctor-image"
-          >
-            <img src={IMAGES.dentistPortrait} alt="Dr. Igor Totti" className="w-full h-full object-cover" />
+      {/* ─── PROCEDURE SECTION ─── */}
+      <section id="procedures" className="py-24 px-6" style={{ background: "white" }}>
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            eyebrow="O Procedimento"
+            title="Facetas de Resina Composta"
+            subtitle="Uma solução elegante e acessível para transformar seu sorriso em uma única sessão, sem desgaste excessivo dos dentes naturais."
+          />
+
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                icon: "⚡",
+                title: "Resultados Imediatos",
+                desc: "Em uma única sessão, você já sai com seu novo sorriso. Sem esperas, sem procedimentos longos. Transformação real no mesmo dia.",
+              },
+              {
+                icon: "🌿",
+                title: "Minimamente Invasivo",
+                desc: "Preservamos ao máximo a estrutura natural dos seus dentes. O procedimento é delicado, confortável e não exige anestesia na maioria dos casos.",
+              },
+              {
+                icon: "✨",
+                title: "Aparência 100% Natural",
+                desc: "As facetas são esculpidas artesanalmente para imitar a translucidez e textura dos dentes naturais. Ninguém vai saber que é faceta — só que você ficou mais bonito.",
+              },
+              {
+                icon: "💎",
+                title: "Design Personalizado",
+                desc: "Cada sorriso é único. Planejamos juntos o formato, tamanho e cor ideal para harmonizar com seu rosto e personalidade.",
+              },
+              {
+                icon: "🛡️",
+                title: "Durabilidade",
+                desc: "Com os cuidados adequados, as facetas de resina duram anos, mantendo a beleza e a função do seu sorriso.",
+              },
+              {
+                icon: "💰",
+                title: "Investimento Acessível",
+                desc: "Comparadas às facetas de porcelana, as de resina oferecem resultados igualmente belos com um custo muito mais acessível.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="card-premium p-8">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style={{ background: "linear-gradient(135deg, oklch(0.97 0.005 85), oklch(0.93 0.01 80))" }}>
+                  {item.icon}
+                </div>
+                <h3 className="font-heading text-xl font-500 mb-3" style={{ color: "var(--charcoal)" }}>
+                  {item.title}
+                </h3>
+                <p className="font-body text-sm leading-relaxed" style={{ color: "oklch(0.45 0.01 30)" }}>
+                  {item.desc}
+                </p>
+              </div>
+            ))}
           </div>
 
-          {/* Content */}
-          <div
-            data-scroll-trigger
-            className={`${visibleElements.has("doctor-content") ? "animate-fade-in-up" : "opacity-0"}`}
-            id="doctor-content"
-          >
-            <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#3b2f2f" }}>
-              CONHEÇA O ESPECIALISTA
-            </p>
-
-            <h2 className="font-heading text-4xl md:text-5xl mb-6" style={{ color: "#3b2f2f" }}>
-              Dr. Igor Totti
-            </h2>
-
-            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              Com mais de 8 anos de experiência em odontologia estética, o Dr. Igor Totti é especialista em facetas de resina composta. Sua abordagem humanizada e técnicas modernas garantem resultados naturais e transformadores.
-            </p>
-
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-start gap-3">
-                <span style={{ color: "#013220" }} className="text-xl">✓</span>
-                <span className="text-gray-700">Especialista em Facetas de Resina Composta</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span style={{ color: "#013220" }} className="text-xl">✓</span>
-                <span className="text-gray-700">Atendimento Humanizado e Personalizado</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span style={{ color: "#013220" }} className="text-xl">✓</span>
-                <span className="text-gray-700">Técnicas Modernas e Atualizadas</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span style={{ color: "#013220" }} className="text-xl">✓</span>
-                <span className="text-gray-700">Resultados Naturais e Duradouros</span>
-              </li>
-            </ul>
-
-            <a href={buildWhatsAppUrl()} className="btn-primary" style={{ backgroundColor: "#013220" }}>
-              <WhatsAppIcon size={20} />
-              Agendar Consulta
+          {/* CTA inline */}
+          <div className="text-center">
+            <a
+              href={buildWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
+              Quero Transformar Meu Sorriso
             </a>
           </div>
         </div>
       </section>
 
-      {/* Treatments Section */}
-      <section id="treatments" className="py-20 px-4 md:px-8 relative section-fade-bottom">
-        <div className="max-w-6xl mx-auto">
-          <div
-            data-scroll-trigger
-            className={`text-center mb-16 ${visibleElements.has("treatments-header") ? "animate-fade-in-up" : "opacity-0"}`}
-            id="treatments-header"
-          >
-            <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#d6bca6" }}>
-              NOSSOS TRATAMENTOS
-            </p>
-            <h2 className="font-heading text-4xl md:text-5xl mb-6" style={{ color: "#d6bca6" }}>
-              Facetas de Resina Composta
-            </h2>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
-              Transforme seu sorriso com resultados imediatos e aparência totalmente natural
-            </p>
-          </div>
+      {/* ─── BEFORE & AFTER GALLERY ─── */}
+      <ResultsCarousel />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* ─── TESTIMONIALS ─── */}
+      <section id="depoimentos" className="py-24 px-6" style={{ background: "var(--cream)" }}>
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            eyebrow="Depoimentos"
+            title="O Que Nossos Pacientes Dizem"
+            subtitle="Histórias reais de pessoas que transformaram não apenas o sorriso, mas a confiança e a qualidade de vida."
+          />
+
+          <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                title: "Resultados Imediatos",
-                description: "Veja a transformação do seu sorriso em uma ou duas sessões. Sem esperas, sem complicações.",
+                name: "Ana Carolina S.",
+                city: "São Paulo, SP",
+                text: "Sempre tive vergonha de sorrir em fotos. Depois das facetas com o Dr. Igor, não consigo parar de sorrir! O resultado ficou tão natural que minha família nem percebeu que fiz o procedimento — só notaram que eu estava mais bonita e confiante.",
+                stars: 5,
+                initial: "A",
               },
               {
-                title: "Minimamente Invasivo",
-                description: "Procedimento que preserva a estrutura natural do seu dente. Conforto garantido durante todo o processo.",
+                name: "Mariana Oliveira",
+                city: "Campinas, SP",
+                text: "Fiz pesquisa em vários dentistas antes de escolher o Dr. Igor. Desde a primeira consulta, ele me explicou tudo com clareza e me deixou muito à vontade. O resultado superou todas as minhas expectativas. Recomendo de olhos fechados!",
+                stars: 5,
+                initial: "M",
               },
               {
-                title: "Aparência Natural",
-                description: "Facetas que se integram perfeitamente ao seu sorriso. Ninguém perceberá que são facetas.",
+                name: "Fernanda Lima",
+                city: "Santos, SP",
+                text: "Tinha um diastema que me incomodava há anos. Em uma única sessão, o Dr. Igor resolveu tudo. O atendimento é humanizado, o ambiente é acolhedor e o resultado é simplesmente incrível. Valeu cada centavo!",
+                stars: 5,
+                initial: "F",
               },
               {
-                title: "Acessível",
-                description: "Mais acessível que facetas de porcelana. Oferecemos planos de pagamento flexíveis.",
+                name: "Juliana Mendes",
+                city: "São Paulo, SP",
+                text: "Fiz as facetas há 2 anos e continua perfeito! O Dr. Igor é muito cuidadoso e atencioso. Ele realmente se preocupa com o resultado e com o bem-estar do paciente. Já indiquei para toda a minha família.",
+                stars: 5,
+                initial: "J",
               },
               {
-                title: "Durável",
-                description: "Com cuidados adequados, duram entre 5 a 10 anos. Investimento que vale a pena.",
+                name: "Patricia Souza",
+                city: "Guarulhos, SP",
+                text: "Estava insegura com o formato dos meus dentes. O Dr. Igor fez um planejamento personalizado e o resultado ficou exatamente como eu sonhava. Sorrindo muito mais agora! Obrigada, doutor!",
+                stars: 5,
+                initial: "P",
               },
               {
-                title: "Personalizado",
-                description: "Design de sorriso único para você. Cada caso é tratado com atenção especial.",
+                name: "Camila Rodrigues",
+                city: "São Bernardo, SP",
+                text: "Profissional excepcional! Além de ser muito competente, o Dr. Igor tem uma sensibilidade enorme para entender o que o paciente quer. Meu sorriso ficou harmonioso, natural e lindo. Recomendo muito!",
+                stars: 5,
+                initial: "C",
               },
-            ].map((benefit, idx) => (
-              <div
-                key={idx}
-                data-scroll-trigger
-                className={`card-premium text-center ${
-                  visibleElements.has(`benefit-${idx}`) ? "animate-fade-in-up" : "opacity-0"
-                }`}
-                id={`benefit-${idx}`}
-                style={{ backgroundColor: "#4a3f3f", borderColor: "#5a4f4f" }}
-              >
-                <div className="text-4xl mb-4" style={{ color: "#d6bca6" }}>
-                  ★
+            ].map((t, i) => (
+              <div key={i} className="testimonial-card">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-11 h-11 rounded-full flex items-center justify-center font-heading font-600 text-white text-lg flex-shrink-0" style={{ background: "linear-gradient(135deg, oklch(0.62 0.09 75), oklch(0.72 0.12 75))" }}>
+                    {t.initial}
+                  </div>
+                  <div>
+                    <p className="font-body text-sm font-700" style={{ color: "var(--charcoal)" }}>{t.name}</p>
+                    <p className="font-body text-xs" style={{ color: "oklch(0.55 0.01 30)" }}>{t.city}</p>
+                  </div>
                 </div>
-                <h3 className="font-heading text-xl mb-4" style={{ color: "#d6bca6" }}>
-                  {benefit.title}
-                </h3>
-                <p className="text-white/70 leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Results Section */}
-      <section id="resultados" className="py-20 px-4 md:px-8 relative section-fade-bottom">
-        <div className="max-w-6xl mx-auto">
-          <div
-            data-scroll-trigger
-            className={`text-center mb-16 ${visibleElements.has("results-header") ? "animate-fade-in-up" : "opacity-0"}`}
-            id="results-header"
-          >
-            <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#d6bca6" }}>
-              ANTES E DEPOIS
-            </p>
-            <h2 className="font-heading text-4xl md:text-5xl mb-6" style={{ color: "#d6bca6" }}>
-              Veja a Transformação
-            </h2>
-          </div>
-
-          <div
-            data-scroll-trigger
-            className={`${visibleElements.has("carousel") ? "animate-fade-in-up" : "opacity-0"}`}
-            id="carousel"
-          >
-            <BeforeAfterCarousel />
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 px-4 md:px-8 relative section-fade-bottom" style={{ backgroundColor: "#d6bca6" }}>
-        <div className="max-w-6xl mx-auto">
-          <div
-            data-scroll-trigger
-            className={`text-center mb-16 ${visibleElements.has("testimonials-header") ? "animate-fade-in-up" : "opacity-0"}`}
-            id="testimonials-header"
-          >
-            <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#3b2f2f" }}>
-              DEPOIMENTOS
-            </p>
-            <h2 className="font-heading text-4xl md:text-5xl mb-6" style={{ color: "#3b2f2f" }}>
-              O Que Nossos Pacientes Dizem
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Maria Silva",
-                text: "Meu sorriso mudou completamente! O Dr. Igor foi muito profissional e atencioso. Recomendo demais!",
-              },
-              {
-                name: "João Santos",
-                text: "Resultado perfeito! Não dói nada e é rápido. Muito satisfeito com o atendimento.",
-              },
-              {
-                name: "Ana Costa",
-                text: "Finalmente tenho confiança para sorrir! Obrigada Dr. Igor por essa transformação.",
-              },
-              {
-                name: "Carlos Oliveira",
-                text: "Excelente profissional! Recomendo para todos que querem um sorriso perfeito.",
-              },
-              {
-                name: "Patricia Gomes",
-                text: "Adorei o resultado! Natural e lindo. Voltaria mil vezes!",
-              },
-              {
-                name: "Roberto Alves",
-                text: "Melhor decisão que tomei! Sorriso bonito e natural. Muito obrigado!",
-              },
-            ].map((testimonial, idx) => (
-              <div
-                key={idx}
-                data-scroll-trigger
-                className={`p-8 rounded-xl bg-white/10 backdrop-blur-sm ${
-                  visibleElements.has(`testimonial-${idx}`) ? "animate-fade-in-up" : "opacity-0"
-                }`}
-                id={`testimonial-${idx}`}
-              >
-                <Stars count={5} />
-                <p className="text-gray-700 my-4 leading-relaxed">"{testimonial.text}"</p>
-                <p className="font-heading text-lg" style={{ color: "#3b2f2f" }}>
-                  {testimonial.name}
+                <Stars count={t.stars} />
+                <p className="font-body text-sm leading-relaxed mt-4" style={{ color: "oklch(0.35 0.01 30)" }}>
+                  "{t.text}"
                 </p>
               </div>
             ))}
@@ -708,119 +741,272 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Video Section */}
-      <VideoSection />
-
-      {/* FAQ Section */}
+      {/* ─── FAQ ─── */}
       <FAQSection />
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 md:px-8 relative section-fade-bottom">
-        <div className="max-w-2xl mx-auto">
-          <div
-            data-scroll-trigger
-            className={`text-center mb-12 ${visibleElements.has("contact-header") ? "animate-fade-in-up" : "opacity-0"}`}
-            id="contact-header"
-          >
-            <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#d6bca6" }}>
-              ENTRE EM CONTATO
-            </p>
-            <h2 className="font-heading text-4xl md:text-5xl mb-6" style={{ color: "#d6bca6" }}>
-              Agende Sua Consulta
-            </h2>
-          </div>
-
-          <div
-            data-scroll-trigger
-            className={`${visibleElements.has("contact-form") ? "animate-fade-in-up" : "opacity-0"}`}
-            id="contact-form"
-          >
-            <LeadForm />
-          </div>
-        </div>
-      </section>
-
-      {/* Location Section */}
-      <section id="location" className="py-20 px-4 md:px-8 relative section-fade-bottom" style={{ backgroundColor: "#d6bca6" }}>
+      {/* ─── DIFFERENTIALS ─── */}
+      <section id="about" className="py-24 px-6" style={{ background: "white" }}>
         <div className="max-w-6xl mx-auto">
-          <div
-            data-scroll-trigger
-            className={`text-center mb-12 ${visibleElements.has("location-header") ? "animate-fade-in-up" : "opacity-0"}`}
-            id="location-header"
-          >
-            <p className="text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "#3b2f2f" }}>
-              LOCALIZAÇÃO
-            </p>
-            <h2 className="font-heading text-4xl md:text-5xl mb-6" style={{ color: "#3b2f2f" }}>
-              OdontoNew Guarapuava
-            </h2>
-          </div>
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="font-body text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "var(--gold)" }}>
+                ✨ Nosso Espaço
+              </p>
+              <h2 className="font-heading text-4xl md:text-5xl font-light mb-6" style={{ color: "var(--charcoal)" }}>
+                O Que Nos Torna{" "}
+                <em className="not-italic" style={{ color: "var(--gold)", fontFamily: "'Instrument Serif', serif", fontWeight: "700", fontStyle: "italic" }}>Diferentes</em>
+              </h2>
+              <div className="mb-8" style={{ width: "60px", height: "2px", background: "linear-gradient(to right, var(--gold), transparent)" }} />
+              <p className="font-body text-base leading-relaxed mb-10" style={{ color: "oklch(0.4 0.01 30)" }}>
+                Não somos apenas um consultório odontológico. Somos um espaço dedicado a transformar vidas através de sorrisos. Cada detalhe do nosso atendimento foi pensado para que você se sinta especial, acolhido e confiante.
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Map */}
-            <div
-              data-scroll-trigger
-              className={`relative w-full h-96 rounded-xl overflow-hidden ${
-                visibleElements.has("map") ? "animate-fade-in-up" : "opacity-0"
-              }`}
-              id="map"
-            >
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3633.5234567890123!2d-51.5!3d-25.4!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94f4a0a0a0a0a0a1%3A0x0!2sGuarapuava!5e0!3m2!1spt-BR!2sbr!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: "💛",
+                    title: "Atendimento Humanizado",
+                    desc: "Você não é apenas um paciente — é uma pessoa com uma história. Ouvimos seus desejos e medos para criar a experiência mais acolhedora possível.",
+                  },
+                  {
+                    icon: "🎨",
+                    title: "Design do Sorriso Personalizado",
+                    desc: "Cada sorriso é planejado individualmente, levando em conta a harmonia do seu rosto, a cor da sua pele e a sua personalidade.",
+                  },
+                  {
+                    icon: "🔬",
+                    title: "Técnicas Atualizadas",
+                    desc: "Investimos constantemente em cursos e atualizações para oferecer sempre o que há de mais moderno em odontologia estética.",
+                  },
+                  {
+                    icon: "🌟",
+                    title: "Resultados Naturais",
+                    desc: "Nossa filosofia é criar sorrisos que pareçam naturais — belos, mas que combinem com quem você é.",
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style={{ background: "linear-gradient(135deg, oklch(0.97 0.005 85), oklch(0.93 0.01 80))" }}>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-heading text-lg font-500 mb-1" style={{ color: "var(--charcoal)" }}>{item.title}</h3>
+                      <p className="font-body text-sm leading-relaxed" style={{ color: "oklch(0.45 0.01 30)" }}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Info */}
-            <div
-              data-scroll-trigger
-              className={`flex flex-col justify-center ${
-                visibleElements.has("location-info") ? "animate-fade-in-up" : "opacity-0"
-              }`}
-              id="location-info"
-            >
-              <div className="space-y-6">
-                <div>
-                  <p className="font-heading text-xl mb-2" style={{ color: "#3b2f2f" }}>
-                    Endereço
-                  </p>
-                  <p className="text-gray-700">Rua Exemplo, 123 - Centro, Guarapuava - PR</p>
+            {/* Clinic image */}
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: "4/5" }}>
+                <img src={IMAGES.clinic} alt="Consultório Dr. Igor Totti" className="w-full h-full object-cover" />
+              </div>
+              {/* Floating card */}
+              <div className="absolute -bottom-6 -left-6 rounded-2xl p-5 shadow-xl" style={{ background: "white", border: "1px solid oklch(0.93 0.005 85)" }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}>
+                    <WhatsAppIcon size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <p className="font-body text-xs font-700" style={{ color: "var(--charcoal)" }}>Resposta Rápida</p>
+                    <p className="font-body text-xs" style={{ color: "oklch(0.55 0.01 30)" }}>Atendimento via WhatsApp</p>
+                  </div>
                 </div>
-
-                <div>
-                  <p className="font-heading text-xl mb-2" style={{ color: "#3b2f2f" }}>
-                    Telefone
-                  </p>
-                  <p className="text-gray-700">(42) 99999-9999</p>
-                </div>
-
-                <div>
-                  <p className="font-heading text-xl mb-2" style={{ color: "#3b2f2f" }}>
-                    Horário de Atendimento
-                  </p>
-                  <p className="text-gray-700">Segunda a Sexta: 8h às 18h</p>
-                  <p className="text-gray-700">Sábado: 8h às 13h</p>
-                </div>
-
-                <a href={buildWhatsAppUrl()} className="btn-primary" style={{ backgroundColor: "#013220" }}>
-                  <WhatsAppIcon size={20} />
-                  Agendar Agora
-                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 md:px-8 text-center text-white/60 border-t border-white/10">
-        <p className="text-sm">© 2026 Dr. Igor Totti. Todos os direitos reservados.</p>
+      {/* ─── LEAD CAPTURE FORM ─── */}
+      <section id="contact" className="py-24 px-6" style={{ background: "var(--cream)" }}>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            {/* Left: copy */}
+            <div>
+              <p className="font-body text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "var(--gold)" }}>
+                ✦ Dê o Primeiro Passo
+              </p>
+              <h2 className="font-heading text-4xl md:text-5xl font-light mb-6" style={{ color: "var(--charcoal)" }}>
+                Seu Novo Sorriso{" "}
+                <em className="not-italic" style={{ color: "var(--gold)", fontFamily: "'Instrument Serif', serif", fontWeight: "700", fontStyle: "italic" }}>Começa Aqui</em>
+              </h2>
+              <div className="mb-8" style={{ width: "60px", height: "2px", background: "linear-gradient(to right, var(--gold), transparent)" }} />
+              <p className="font-body text-base leading-relaxed mb-8" style={{ color: "oklch(0.4 0.01 30)" }}>
+                Preencha o formulário ao lado e nossa equipe entrará em contato pelo WhatsApp para agendar sua consulta de avaliação gratuita. Sem compromisso, sem pressão — apenas o começo de uma transformação.
+              </p>
+
+              <div className="space-y-4">
+                {[
+                  "✅ Consulta de avaliação gratuita",
+                  "✅ Planejamento personalizado do sorriso",
+                  "✅ Atendimento humanizado e acolhedor",
+                  "✅ Resultados em uma única sessão",
+                  "✅ Técnicas modernas e minimamente invasivas",
+                ].map((item, i) => (
+                  <p key={i} className="font-body text-sm" style={{ color: "oklch(0.35 0.01 30)" }}>{item}</p>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: form */}
+            <div ref={formRef} className="card-premium p-8">
+              <h3 className="font-heading text-2xl font-light mb-2" style={{ color: "var(--charcoal)" }}>
+                Agende Sua Consulta
+              </h3>
+              <p className="font-body text-sm mb-6" style={{ color: "oklch(0.5 0.01 30)" }}>
+                Preencha seus dados e falaremos com você em breve.
+              </p>
+              <LeadForm />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FINAL CTA ─── */}
+      <section id="location" className="py-24 px-6 relative overflow-hidden" style={{ background: "var(--charcoal)" }}>
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-0 left-0 w-96 h-96 rounded-full" style={{ background: "var(--gold)", filter: "blur(80px)", transform: "translate(-30%, -30%)" }} />
+          <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full" style={{ background: "var(--gold)", filter: "blur(80px)", transform: "translate(30%, 30%)" }} />
+        </div>
+
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <p className="font-body text-xs font-700 tracking-[0.3em] uppercase mb-6" style={{ color: "var(--gold)" }}>
+            ✦ Não Espere Mais
+          </p>
+          <h2 className="font-heading text-5xl md:text-6xl font-light text-white mb-6 leading-tight">
+            Seu Sorriso Dos Sonhos{" "}
+            <em className="not-italic" style={{ color: "var(--gold)", fontFamily: "'Instrument Serif', serif", fontWeight: "700", fontStyle: "italic" }}>Te Espera</em>
+          </h2>
+          <p className="font-body text-lg text-white/80 mb-10 leading-relaxed">
+            Cada dia que passa é um dia a menos sorrindo com confiança. Dê o primeiro passo agora — a transformação que você sempre quis está a uma mensagem de distância.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={buildWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-whatsapp text-base px-10 py-5"
+            >
+              <WhatsAppIcon size={24} />
+              Quero Agendar Minha Consulta
+            </a>
+            <button
+              onClick={scrollToForm}
+              className="font-body font-700 text-sm tracking-widest uppercase px-8 py-5 rounded-full transition-all"
+              style={{ border: "2px solid rgba(255,255,255,0.4)", color: "white", background: "transparent" }}
+              onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.1)"; }}
+              onMouseLeave={e => { (e.target as HTMLElement).style.background = "transparent"; }}
+            >
+              Preencher Formulário
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── LOCATION SECTION ─── */}
+      <section id="location" className="py-24 px-6" style={{ background: "white" }}>
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            eyebrow="Nos Visite"
+            title="OdontoNew Guarapuava"
+            subtitle="Venha conhecer nosso espaço acolhedor e moderno. Estamos localizados em Guarapuava, pronto para transformar seu sorriso."
+          />
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Map */}
+            <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: "4/3" }}>
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3633.4567890123456!2d-51.4534!3d-25.3957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94f5c8b7c8b7c8b7%3A0x1234567890abcdef!2sOdontoNew%20Guarapuava!5e0!3m2!1spt-BR!2sbr!4v1234567890123"
+              />
+            </div>
+
+            {/* Info */}
+            <div>
+              <p className="font-body text-xs font-700 tracking-[0.25em] uppercase mb-4" style={{ color: "var(--gold)" }}>
+                ✨ Informações de Contato
+              </p>
+              <h3 className="font-heading text-3xl md:text-4xl font-light mb-6" style={{ color: "var(--charcoal)" }}>
+                Visite Nossa Clínica
+              </h3>
+              <div className="mb-8" style={{ width: "60px", height: "2px", background: "linear-gradient(to right, var(--gold), transparent)" }} />
+
+              <div className="space-y-6">
+                <div>
+                  <p className="font-body text-sm font-700 mb-2" style={{ color: "var(--charcoal)" }}>Endereço</p>
+                  <p className="font-body text-base leading-relaxed" style={{ color: "oklch(0.4 0.01 30)" }}>
+                    Rua Exemplo, 123<br />
+                    Guarapuava, PR 85010-000
+                  </p>
+                </div>
+                <div>
+                  <p className="font-body text-sm font-700 mb-2" style={{ color: "var(--charcoal)" }}>Horário de Atendimento</p>
+                  <p className="font-body text-base leading-relaxed" style={{ color: "oklch(0.4 0.01 30)" }}>
+                    Segunda a Sexta: 8h às 18h<br />
+                    Sábado: 8h às 12h<br />
+                    Domingo: Fechado
+                  </p>
+                </div>
+                <div>
+                  <p className="font-body text-sm font-700 mb-2" style={{ color: "var(--charcoal)" }}>Contato</p>
+                  <p className="font-body text-base leading-relaxed" style={{ color: "oklch(0.4 0.01 30)" }}>
+                    <a href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="font-700" style={{ color: "#25D366" }}>
+                      WhatsApp: (42) 99999-9999
+                    </a><br />
+                    Email: contato@odontonew.com.br
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={buildWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-whatsapp mt-8"
+              >
+                <WhatsAppIcon size={20} />
+                Agendar Consulta
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer className="py-10 px-6" style={{ background: "oklch(0.1 0.01 30)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, oklch(0.62 0.09 75), oklch(0.72 0.12 75))" }}>
+              <span className="font-heading text-white font-600 text-sm">IT</span>
+            </div>
+            <div>
+              <p className="font-heading font-600 text-sm text-white leading-tight">Dr. Igor Totti</p>
+              <p className="font-body text-xs leading-tight" style={{ color: "var(--gold)" }}>Odontologia Estética</p>
+            </div>
+          </div>
+          <p className="font-body text-xs text-center" style={{ color: "rgba(255,255,255,0.4)" }}>
+            © {new Date().getFullYear()} Dr. Igor Totti — Todos os direitos reservados. CRO-SP XXXXX
+          </p>
+          <a
+            href={buildWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 font-body text-sm font-700"
+            style={{ color: "#25D366" }}
+          >
+            <WhatsAppIcon size={18} />
+            Agendar Consulta
+          </a>
+        </div>
       </footer>
+
     </div>
   );
 }

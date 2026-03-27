@@ -123,7 +123,7 @@ export default function AdminLeads() {
           <h1 className="font-heading text-4xl font-light mb-4" style={{ color: "var(--charcoal)" }}>
             Acesso Negado
           </h1>
-          <p className="text-base mb-8" style={{ color: "oklch(0.45 0.01 30)" }}>
+          <p className="font-body text-base mb-8" style={{ color: "oklch(0.45 0.01 30)" }}>
             Você não tem permissão para acessar este painel. Apenas administradores podem visualizar os leads.
           </p>
           <a
@@ -142,7 +142,7 @@ export default function AdminLeads() {
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--background)" }}>
         <div className="text-center">
           <div className="w-12 h-12 rounded-full border-4 border-gold border-t-transparent animate-spin mx-auto mb-4" style={{ borderColor: "var(--gold)", borderTopColor: "transparent" }} />
-          <p className="text-base" style={{ color: "oklch(0.45 0.01 30)" }}>Carregando...</p>
+          <p className="font-body text-base" style={{ color: "oklch(0.45 0.01 30)" }}>Carregando...</p>
         </div>
       </div>
     );
@@ -158,11 +158,11 @@ export default function AdminLeads() {
               <h1 className="font-heading text-3xl font-light" style={{ color: "var(--charcoal)" }}>
                 Painel de Leads
               </h1>
-              <p className="text-sm mt-1" style={{ color: "oklch(0.5 0.01 30)" }}>
+              <p className="font-body text-sm mt-1" style={{ color: "oklch(0.5 0.01 30)" }}>
                 Total de leads: <strong>{total}</strong>
               </p>
             </div>
-            <a href="/" className="text-sm font-700 px-4 py-2 rounded-lg transition-all" style={{ color: "var(--gold)", border: "1px solid var(--gold)" }} onMouseEnter={e => { (e.target as HTMLElement).style.background = "var(--gold-light)"; }} onMouseLeave={e => { (e.target as HTMLElement).style.background = "transparent"; }}>
+            <a href="/" className="font-body text-sm font-700 px-4 py-2 rounded-lg transition-all" style={{ color: "var(--gold)", border: "1px solid var(--gold)" }} onMouseEnter={e => { (e.target as HTMLElement).style.background = "var(--gold-light)"; }} onMouseLeave={e => { (e.target as HTMLElement).style.background = "transparent"; }}>
               ← Voltar
             </a>
           </div>
@@ -177,7 +177,7 @@ export default function AdminLeads() {
                 setSearchQuery(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-all"
+              className="w-full px-4 py-3 rounded-lg font-body text-sm outline-none transition-all"
               style={{
                 border: "1.5px solid oklch(0.91 0.006 85)",
                 background: "white",
@@ -191,7 +191,7 @@ export default function AdminLeads() {
           {/* Filters */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
             <div>
-              <label className="text-xs font-700 mb-1 block" style={{ color: "var(--charcoal)" }}>
+              <label className="font-body text-xs font-700 mb-1 block" style={{ color: "var(--charcoal)" }}>
                 Cidade
               </label>
               <input
@@ -202,7 +202,7 @@ export default function AdminLeads() {
                   setFilterCity(e.target.value);
                   setPage(1);
                 }}
-                className="w-full px-3 py-2 rounded-lg text-xs outline-none transition-all"
+                className="w-full px-3 py-2 rounded-lg font-body text-xs outline-none transition-all"
                 style={{
                   border: "1.5px solid oklch(0.91 0.006 85)",
                   background: "white",
@@ -213,7 +213,7 @@ export default function AdminLeads() {
               />
             </div>
             <div>
-              <label className="text-xs font-700 mb-1 block" style={{ color: "var(--charcoal)" }}>
+              <label className="font-body text-xs font-700 mb-1 block" style={{ color: "var(--charcoal)" }}>
                 Interesse
               </label>
               <select
@@ -222,7 +222,7 @@ export default function AdminLeads() {
                   setFilterInterest(e.target.value);
                   setPage(1);
                 }}
-                className="w-full px-3 py-2 rounded-lg text-xs outline-none transition-all"
+                className="w-full px-3 py-2 rounded-lg font-body text-xs outline-none transition-all"
                 style={{
                   border: "1.5px solid oklch(0.91 0.006 85)",
                   background: "white",
@@ -239,7 +239,7 @@ export default function AdminLeads() {
               </select>
             </div>
             <div>
-              <label className="text-xs font-700 mb-1 block" style={{ color: "var(--charcoal)" }}>
+              <label className="font-body text-xs font-700 mb-1 block" style={{ color: "var(--charcoal)" }}>
                 De
               </label>
               <input
@@ -249,7 +249,7 @@ export default function AdminLeads() {
                   setStartDate(e.target.value);
                   setPage(1);
                 }}
-                className="w-full px-3 py-2 rounded-lg text-xs outline-none transition-all"
+                className="w-full px-3 py-2 rounded-lg font-body text-xs outline-none transition-all"
                 style={{
                   border: "1.5px solid oklch(0.91 0.006 85)",
                   background: "white",
@@ -260,7 +260,7 @@ export default function AdminLeads() {
               />
             </div>
             <div>
-              <label className="text-xs font-700 mb-1 block" style={{ color: "var(--charcoal)" }}>
+              <label className="font-body text-xs font-700 mb-1 block" style={{ color: "var(--charcoal)" }}>
                 Até
               </label>
               <input
@@ -270,7 +270,7 @@ export default function AdminLeads() {
                   setEndDate(e.target.value);
                   setPage(1);
                 }}
-                className="w-full px-3 py-2 rounded-lg text-xs outline-none transition-all"
+                className="w-full px-3 py-2 rounded-lg font-body text-xs outline-none transition-all"
                 style={{
                   border: "1.5px solid oklch(0.91 0.006 85)",
                   background: "white",
@@ -283,7 +283,7 @@ export default function AdminLeads() {
             <div className="flex items-end gap-2">
               <button
                 onClick={handleResetFilters}
-                className="flex-1 px-3 py-2 rounded-lg text-xs font-700 transition-all"
+                className="flex-1 px-3 py-2 rounded-lg font-body text-xs font-700 transition-all"
                 style={{
                   background: "oklch(0.96 0.005 85)",
                   color: "var(--charcoal)",
@@ -302,7 +302,7 @@ export default function AdminLeads() {
             <select
               value={exportFormat}
               onChange={(e) => setExportFormat(e.target.value as "csv" | "json")}
-              className="px-3 py-2 rounded-lg text-xs outline-none"
+              className="px-3 py-2 rounded-lg font-body text-xs outline-none"
               style={{
                 border: "1.5px solid oklch(0.91 0.006 85)",
                 background: "white",
@@ -330,11 +330,11 @@ export default function AdminLeads() {
           {isLoading ? (
             <div className="text-center py-12">
               <div className="w-12 h-12 rounded-full border-4 border-gold border-t-transparent animate-spin mx-auto mb-4" style={{ borderColor: "var(--gold)", borderTopColor: "transparent" }} />
-              <p className="text-base" style={{ color: "oklch(0.45 0.01 30)" }}>Carregando leads...</p>
+              <p className="font-body text-base" style={{ color: "oklch(0.45 0.01 30)" }}>Carregando leads...</p>
             </div>
           ) : leads.length === 0 ? (
             <div className="text-center py-12 card-premium">
-              <p className="text-base mb-4" style={{ color: "oklch(0.45 0.01 30)" }}>
+              <p className="font-body text-base mb-4" style={{ color: "oklch(0.45 0.01 30)" }}>
                 Nenhum lead encontrado com os filtros selecionados.
               </p>
               <button
@@ -377,18 +377,18 @@ export default function AdminLeads() {
                             borderTop: i > 0 ? "1px solid oklch(0.93 0.005 85)" : "none",
                           }}
                         >
-                          <td className="px-6 py-4 text-sm" style={{ color: "var(--charcoal)" }}>
+                          <td className="px-6 py-4 font-body text-sm" style={{ color: "var(--charcoal)" }}>
                             {lead.fullName}
                           </td>
-                          <td className="px-6 py-4 text-sm" style={{ color: "oklch(0.45 0.01 30)" }}>
+                          <td className="px-6 py-4 font-body text-sm" style={{ color: "oklch(0.45 0.01 30)" }}>
                             <a href={`https://wa.me/${lead.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer" style={{ color: "#25D366", textDecoration: "underline" }}>
                               {lead.whatsapp}
                             </a>
                           </td>
-                          <td className="px-6 py-4 text-sm" style={{ color: "oklch(0.45 0.01 30)" }}>
+                          <td className="px-6 py-4 font-body text-sm" style={{ color: "oklch(0.45 0.01 30)" }}>
                             {lead.city}
                           </td>
-                          <td className="px-6 py-4 text-sm" style={{ color: "oklch(0.45 0.01 30)" }}>
+                          <td className="px-6 py-4 font-body text-sm" style={{ color: "oklch(0.45 0.01 30)" }}>
                             {lead.interest ? (
                               <span className="inline-block px-3 py-1 rounded-full text-xs font-700" style={{ background: "var(--gold-light)", color: "var(--charcoal)" }}>
                                 {lead.interest}
@@ -397,7 +397,7 @@ export default function AdminLeads() {
                               <span style={{ color: "oklch(0.65 0.01 30)" }}>-</span>
                             )}
                           </td>
-                          <td className="px-6 py-4 text-sm" style={{ color: "oklch(0.45 0.01 30)" }}>
+                          <td className="px-6 py-4 font-body text-sm" style={{ color: "oklch(0.45 0.01 30)" }}>
                             {new Date(lead.createdAt).toLocaleDateString("pt-BR")}
                           </td>
                         </tr>
@@ -415,11 +415,11 @@ export default function AdminLeads() {
                       <p className="font-heading font-600 text-sm" style={{ color: "var(--charcoal)" }}>
                         {lead.fullName}
                       </p>
-                      <p className="text-xs mt-1" style={{ color: "oklch(0.5 0.01 30)" }}>
+                      <p className="font-body text-xs mt-1" style={{ color: "oklch(0.5 0.01 30)" }}>
                         {new Date(lead.createdAt).toLocaleDateString("pt-BR")}
                       </p>
                     </div>
-                    <div className="space-y-2 text-sm">
+                    <div className="space-y-2 font-body text-sm">
                       <p>
                         <span style={{ color: "oklch(0.5 0.01 30)" }}>WhatsApp: </span>
                         <a href={`https://wa.me/${lead.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer" style={{ color: "#25D366", textDecoration: "underline" }}>
@@ -449,7 +449,7 @@ export default function AdminLeads() {
                   <button
                     onClick={() => setPage(Math.max(1, page - 1))}
                     disabled={page === 1}
-                    className="px-4 py-2 rounded-lg text-sm font-700 transition-all"
+                    className="px-4 py-2 rounded-lg font-body text-sm font-700 transition-all"
                     style={{
                       background: page === 1 ? "oklch(0.96 0.005 85)" : "white",
                       color: page === 1 ? "oklch(0.6 0.01 30)" : "var(--charcoal)",
@@ -464,7 +464,7 @@ export default function AdminLeads() {
                       <button
                         key={i + 1}
                         onClick={() => setPage(i + 1)}
-                        className="w-10 h-10 rounded-lg text-sm font-700 transition-all"
+                        className="w-10 h-10 rounded-lg font-body text-sm font-700 transition-all"
                         style={{
                           background: page === i + 1 ? "var(--gold)" : "white",
                           color: page === i + 1 ? "white" : "var(--charcoal)",
@@ -478,7 +478,7 @@ export default function AdminLeads() {
                   <button
                     onClick={() => setPage(Math.min(pages, page + 1))}
                     disabled={page === pages}
-                    className="px-4 py-2 rounded-lg text-sm font-700 transition-all"
+                    className="px-4 py-2 rounded-lg font-body text-sm font-700 transition-all"
                     style={{
                       background: page === pages ? "oklch(0.96 0.005 85)" : "white",
                       color: page === pages ? "oklch(0.6 0.01 30)" : "var(--charcoal)",

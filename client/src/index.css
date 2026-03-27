@@ -43,50 +43,51 @@
 }
 
 :root {
-  /* Dr. Igor Totti Premium Brand Palette */
-  --charcoal: #3b2f2f;
+  /* Dr. Igor Totti Brand Palette - RGB Exact */
+  --cream: #f5f5dc;
   --taupe: #d6bca6;
+  --charcoal: #3b2f2f;
   --forest: #013220;
 
-  --primary: #013220;
+  --primary: #d6bca6;
   --primary-foreground: #ffffff;
-  --sidebar-primary: #013220;
+  --sidebar-primary: #d6bca6;
   --sidebar-primary-foreground: #ffffff;
   --chart-1: #d6bca6;
-  --chart-2: #3b2f2f;
-  --chart-3: #013220;
-  --chart-4: #8b7355;
-  --chart-5: #6b5d55;
+  --chart-2: #f5f5dc;
+  --chart-3: #3b2f2f;
+  --chart-4: #013220;
+  --chart-5: #8b7355;
   --radius: 0.65rem;
-  --background: #3b2f2f;
-  --foreground: #ffffff;
-  --card: #4a3f3f;
-  --card-foreground: #ffffff;
-  --popover: #4a3f3f;
-  --popover-foreground: #ffffff;
-  --secondary: #d6bca6;
+  --background: #f5f5dc;
+  --foreground: #3b2f2f;
+  --card: #ffffff;
+  --card-foreground: #3b2f2f;
+  --popover: #ffffff;
+  --popover-foreground: #3b2f2f;
+  --secondary: #f5f5dc;
   --secondary-foreground: #3b2f2f;
-  --muted: #5a4f4f;
-  --muted-foreground: #c9bfb9;
+  --muted: #e8e0d0;
+  --muted-foreground: #6b5d55;
   --accent: #d6bca6;
-  --accent-foreground: #3b2f2f;
+  --accent-foreground: #ffffff;
   --destructive: #c41e3a;
   --destructive-foreground: #ffffff;
-  --border: #5a4f4f;
-  --input: #4a3f3f;
+  --border: #d6bca6;
+  --input: #f5f5dc;
   --ring: #d6bca6;
-  --sidebar: #3b2f2f;
-  --sidebar-foreground: #ffffff;
+  --sidebar: #f5f5dc;
+  --sidebar-foreground: #3b2f2f;
   --sidebar-accent: #d6bca6;
-  --sidebar-accent-foreground: #3b2f2f;
-  --sidebar-border: #5a4f4f;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #d6bca6;
   --sidebar-ring: #d6bca6;
   /* Custom brand tokens */
   --gold: #d6bca6;
   --gold-light: #e8dcc8;
   --gold-dark: #c9a876;
   --charcoal: #3b2f2f;
-  --forest: #013220;
+  --cream: #f5f5dc;
 }
 
 .dark {
@@ -100,199 +101,264 @@
   --card-foreground: oklch(0.85 0.005 65);
   --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.25 0.008 285.885);
-  --secondary-foreground: oklch(0.85 0.005 65);
-  --muted: oklch(0.3 0.006 285.885);
-  --muted-foreground: oklch(0.7 0.005 65);
-  --accent: oklch(0.5 0.15 142.5);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.6 0.2 25);
-  --destructive-foreground: oklch(0.98 0.0 0);
-  --border: oklch(0.3 0.006 285.885);
-  --input: oklch(0.21 0.006 285.885);
-  --ring: oklch(0.5 0.15 142.5);
-  --sidebar: oklch(0.141 0.005 285.823);
+  --secondary: oklch(0.24 0.006 286.033);
+  --secondary-foreground: oklch(0.7 0.005 65);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground:  oklch(0.92 0.005 65);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.488 0.243 264.376);
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+  --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.5 0.15 142.5);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.3 0.006 285.885);
-  --sidebar-ring: oklch(0.5 0.15 142.5);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.488 0.243 264.376);
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
-
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "Instrument Serif", serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Instrument Serif', 'Helvetica', serif;
     font-style: italic;
-    font-weight: 700;
+    letter-spacing: -0.02em;
   }
-
-  p,
-  span,
-  a,
-  button,
-  input,
-  textarea,
-  select {
-    font-family: "Helvetica", "Helvetica Neue", sans-serif;
-  }
-
-  /* Scroll animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  .animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  .animate-fade-in-down {
-    animation: fadeInDown 0.8s ease-out forwards;
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
-  }
-
-  /* Scroll trigger base */
-  .scroll-trigger {
-    opacity: 0;
-  }
-
-  .scroll-trigger.visible {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  /* Section fade bottom */
-  .section-fade-bottom {
-    position: relative;
-  }
-
-  .section-fade-bottom::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 120px;
-    background: linear-gradient(to bottom, rgba(59, 47, 47, 0) 0%, rgba(59, 47, 47, 0.3) 100%);
-    pointer-events: none;
-  }
-}
-
-@layer components {
-  .btn-whatsapp {
-    @apply inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95;
-    background-color: #25d366;
-  }
-
-  .btn-whatsapp:hover {
-    background-color: #20ba5a;
-    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
-  }
-
-  .btn-primary {
-    @apply inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95;
-    background-color: #013220;
-  }
-
-  .btn-primary:hover {
-    background-color: #0a1f18;
-    box-shadow: 0 8px 24px rgba(1, 50, 32, 0.3);
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold transition-all duration-300 hover:scale-105 active:scale-95;
-    background-color: transparent;
-    color: #d6bca6;
-    border: 2px solid #d6bca6;
-  }
-
-  .btn-secondary:hover {
-    background-color: rgba(214, 188, 166, 0.1);
-  }
-
-  .before-after-card {
-    @apply relative overflow-hidden rounded-xl transition-transform duration-300 hover:scale-105;
-    background: linear-gradient(135deg, #4a3f3f 0%, #5a4f4f 100%);
-  }
-
-  .before-after-card img {
-    @apply w-full h-full object-cover;
-  }
-
-  .card-premium {
-    @apply p-8 rounded-xl transition-all duration-300 hover:shadow-lg;
-    background-color: #4a3f3f;
-    border: 1px solid #5a4f4f;
-  }
-
-  .card-premium:hover {
-    border-color: #d6bca6;
-    background-color: #5a4f4f;
-  }
-
-
-
-  .container {
-    @apply mx-auto px-4;
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
   }
 }
 
 @layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent;
+  .font-heading {
+    font-family: 'Instrument Serif', 'Helvetica', serif;
+    font-style: italic;
+  }
+  .font-body {
+    font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .text-gold {
+    color: var(--gold);
+  }
+  .bg-gold {
+    background-color: var(--gold);
+  }
+  .bg-gold-light {
+    background-color: var(--gold-light);
+  }
+  .border-gold {
+    border-color: var(--gold);
+  }
+  .text-charcoal {
+    color: var(--charcoal);
+  }
+  .bg-charcoal {
+    background-color: var(--charcoal);
+  }
+  .bg-cream {
+    background-color: var(--cream);
+  }
+  .gradient-gold {
+    background: linear-gradient(135deg, oklch(0.72 0.12 75), oklch(0.82 0.09 80));
+  }
+  .gradient-dark {
+    background: linear-gradient(135deg, oklch(0.12 0.01 30), oklch(0.2 0.01 30));
+  }
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, oklch(0.72 0.12 75), transparent);
+  }
+  .gold-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .gold-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, oklch(0.72 0.12 75), oklch(0.82 0.09 80));
+    border-radius: 2px;
+  }
+  .btn-whatsapp {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    border-radius: 9999px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, oklch(0.62 0.09 75), oklch(0.72 0.12 75));
+    color: white;
+    border-radius: 9999px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(180, 140, 60, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(180, 140, 60, 0.5);
+  }
+  .card-premium {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+    border: 1px solid oklch(0.93 0.005 85);
+    transition: all 0.3s ease;
+  }
+  .card-premium:hover {
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+  }
+  .floating-whatsapp {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    animation: pulseWhatsapp 2.5s ease-in-out infinite;
+  }
+  .floating-whatsapp:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.7);
+    animation: none;
+  }
+  @keyframes pulseWhatsapp {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); }
+    50% { box-shadow: 0 4px 35px rgba(37, 211, 102, 0.8), 0 0 0 8px rgba(37, 211, 102, 0.15); }
+  }
+  .testimonial-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+    border-left: 3px solid oklch(0.72 0.12 75);
+    transition: all 0.3s ease;
+  }
+  .testimonial-card:hover {
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+  }
+  .before-after-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+  .before-after-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .before-after-card:hover img {
+    transform: scale(1.03);
+  }
+}
+
+@layer components {
+  /**
+   * Custom container utility that centers content and adds responsive padding.
+   *
+   * This overrides Tailwind's default container behavior to:
+   * - Auto-center content (mx-auto)
+   * - Add responsive horizontal padding
+   * - Set max-width for large screens
+   *
+   * Usage: <div className="container">...</div>
+   *
+   * For custom widths, use max-w-* utilities directly:
+   * <div className="max-w-6xl mx-auto px-4">...</div>
+   */
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* 16px - mobile padding */
+    padding-right: 1rem;
   }
 
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  .flex {
+    min-height: 0;
+    min-width: 0;
   }
 
-  .glass-effect-dark {
-    background: rgba(59, 47, 47, 0.5);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(214, 188, 166, 0.1);
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem; /* 32px - desktop padding */
+      padding-right: 2rem;
+      max-width: 1280px; /* Standard content width */
+    }
   }
 }
